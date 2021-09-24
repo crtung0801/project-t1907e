@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link href="http://localhost:8080/css/style.min.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="http://localhost:8080/css/dataTables.bootstrap4.css">
+<link rel="stylesheet"
+	href="http://localhost:8080/css/responsive.dataTables.min.css">
+	<link rel="stylesheet"
+	href="http://localhost:8080/css/jquery.datetimepicker.min.css">
+
+</head>
+
+<body class="skin-megna fixed-layout">
+	<div id="main-wrapper">
+		<header class="topbar" th:replace="fragments :: header"></header>
+		<aside class="left-sidebar" th:replace="fragments :: menu"></aside>
+		<div class="page-wrapper">
+			<div class="container-fluid">
+				<div class="row page-titles">
+					<div class="col-md-5 align-self-center">
+						<h4 class="text-themecolor">CREATE INJECTION RESULT</h4>
+					</div>
+					<div class="col-md-7 align-self-center text-right">
+						<div class="d-flex justify-content-end align-items-center">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+								<li class="breadcrumb-item active">Create Injection Result</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+
+						<div class="card">
+							<div class="card-body">
+								<form class="needs-validation" name="myForm"
+									th:action="@{/admin/injection-result/save}" method="POST"
+									th:object="${resultInjection}">
+									<div class="form-row">
+										<div class="col-md-4 mb-3">
+											<div class="card-title">
+												Customer <span class="text-danger">(*)</span>
+											</div>
+											<select class="form-control custom-select " name="customer"
+												th:field="*{customer}" id="selectCustomer" th:errorClass="is-invalid">
+												<option value="">---Select Customer---</option>
+												<th:block th:each="cust : ${customers}">
+													<option th:value="${cust.customerId}">[[${cust.customerId}]]-[[${cust.fullName}]]</option>
+												</th:block>
+											</select>
+											<div th:if="${#fields.hasErrors('customer')}"
+												th:errors="*{customer}" class="invalid-feedback"></div>
+										</div>
+										<div class="col-md-4 mb-3">
+											<div class="card-title">
+												Prevention <span class="text-danger">(*)</span>
+											</div>
+											<select class="form-control custom-select " th:errorClass="is-invalid" name="prevention"
+												th:field="*{prevention}">
+												<option value="">---Select Prevention---</option>
+												<th:block th:each="preven : ${preventions}">
+													<option th:value="${preven.id}">[[${preven.preventionName}]]</option>
+												</th:block>
+											</select>
+											<div th:if="${#fields.hasErrors('prevention')}"
+												th:errors="*{prevention}" class="invalid-feedback"></div>
+										</div>
+										<div class="col-md-4 mb-3">
+											<div class="card-title">
+												Vaccine Type <span class="text-danger">(*)</span>
+											</div>
+											<select class="form-control custom-select " th:errorClass="is-invalid" name="vaccine"
+												th:field="*{vaccine}" id="selectCustomer">
+													<option value="">---Select Vaccine Type---</option>
+												<th:block th:each="vacc : ${vaccines}">
+													<option th:value="${vacc.vaccineId}">[[${vacc.vaccineName}]]</option>
+												</th:block>
+											</select>
+											<div th:if="${#fields.hasErrors('vaccine')}"
+												th:errors="*{vaccine}" class="invalid-feedback"></div>
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="col-md-4 mb-3">
+											<div class="card-title">
+												Number Of Injection
+											</div> <input
+												type="text" class="form-control "
+												placeholder="Number of inject" name="numberOfInjection"
+												th:field="*{numberOfInjection}"
+												onkeypress="return validateNumber(event)"> <span
+												th:if="${#fields.hasErrors('numberOfInjection')}"
+												th:errors="*{numberOfInjection}"></span>
+												
+										</div>
+
+										<div class="col-lg-4 col-md-3">
+											<div class="card-title">
+												Date Of Injection
+											</div> <input type="date"
+												name="timeBeginNextInjection" class="form-control "
+												id="startDate" th:field="*{injectionDate}"> <span
+												th:if="${#fields.hasErrors('injectionDate')}"
+												th:errors="*{injectionDate}"></span>
+
+										</div>
+										<div class="col-lg-4 col-md-3">
+											<div class="card-title">
+												Next Injection Appointment
+											</div> <input type="date"
+												class="form-control " id="endDate"
+												name="timeEndNextInjection" th:field="*{nextInjectionDate}">
+											<span th:if="${#fields.hasErrors('nextInjectionDate')}"
+												th:errors="*{nextInjectionDate}"></span>
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="col-md-4 mb-3">
+											<div class="card-title">
+												Place Of Injection
+											</div>
+											<select class="form-control custom-select "
+												th:field="*{place}" id="selectCustomer">
+													<option value="">---Select Place---</option>
+													<th:block th:each="place : ${places}">
+													<option th:value="${place.id}">[[${place.placeName}]]</option>
+												</th:block>
+											</select>
+										</div>
+									</div>
+									<div class="bot">
+										<button class="btn btn-success" type="submit"
+											onclick="return  numberValidation()">Save</button>
+										<button class="btn btn-info" type="reset">Reset</button>
+										<button class="btn btn-warning">
+											<a th:href="@{/admin/injection-result/list}"
+												style="color: white">Cancel</a>
+										</button>
+									</div>
+								</form>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="footer" th:replace="fragments :: footer"></div>
+	</div>
+</body>
+
+<script src="http://localhost:8080/js/jquery-3.2.1.min.js "></script>
+<script src="http://localhost:8080/js/popper.min.js "></script>
+<script src="http://localhost:8080/js/bootstrap.min.js "></script>
+<script src="http://localhost:8080/js/perfect-scrollbar.jquery.min.js "></script>
+<script src="http://localhost:8080/js/waves.js "></script>
+<script src="http://localhost:8080/js/sidebarmenu.js "></script>
+<script src="http://localhost:8080/js/custom.min.js "></script>
+<script src="http://localhost:8080/js/jquery.sparkline.min.js "></script>
+<script src="http://localhost:8080/js/jquery.dataTables.min.js "></script>
+<script src="http://localhost:8080/js/dataTables.responsive.min.js "></script>
+<script src="http://localhost:8080/js/dataTables.buttons.min.js "></script>
+	<script src="http://localhost:8080/js/jquery.datetimepicker.full.js "></script>
+
+<script>
+	function validateNumber(e) {
+		const pattern = /^[0-9]$/;
+
+		return pattern.test(e.key)
+	}
+
+	$("#startDate").datetimepicker({
+		timepicker : false,
+		datepicker : true,
+		format : 'Y-m-d',
+		onShow : function(ct) {
+			this.setOptions({
+				maxDate : $('#endDate').val() ? $('#endDate').val() : false
+			})
+		}
+	})
+
+	$("#endDate").datetimepicker({
+		timepicker : false,
+		datepicker : true,
+		format : 'Y-m-d',
+		onShow : function(ct) {
+			this.setOptions({
+				minDate : $('#startDate').val() ? $('#startDate').val() : false
+			})
+		}
+	})
+</script>
+</body>
+
+</html>

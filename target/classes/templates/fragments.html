@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <title>Anti Covid</title>
+    <link href="css/style.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://localhost:8080/css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="http://localhost:8080/css/responsive.dataTables.min.css">
+
+</head>
+
+<body class="skin-megna fixed-layout">
+    <div id="main-wrapper">
+        <header class="topbar" th:fragment="header">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="http://localhost:8080/admin">
+                        <img src="http://localhost:8080/images/logo-icon.png" alt="homepage" class="dark-logo" />
+                        <img src="http://localhost:8080/images/logo-light-icon.png" alt="homepage" class="light-logo" /> </b>
+                        <span class="hidden-xs"><span class="font-bold">Anti</span>Covid</span>
+                    </a>
+                </div>
+            </nav>
+        </header>
+        <aside class="left-sidebar" th:fragment="menu">
+            <div class="scroll-sidebar">
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li class="user-pro">
+                            <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><img src="http://localhost:8080/images/users/1.jpg" alt="user-img" class="img-circle"><span class="hide-menu">Admin</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="/logout"><i
+										class="fa fa-power-off"></i> Logout</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="waves-effect waves-dark" th:href="@{'/admin'}"><i
+								class="fas fa-home "></i>HOME</a></li>
+                        <li><a class="has-arrow waves-effect waves-dark " href="javascript:void(0) " aria-expanded="false "><i
+								class="fas fa-user-secret "></i><span class="hide-menu ">Employee
+									Management</span></a>
+                            <ul aria-expanded="false " class="collapse ">
+                                <li><a th:href="@{ /admin/employee/list} ">Employee List</a></li>
+                                <li><a th:href="@{/admin/employee/create} ">Create Employee</a></li>
+                            </ul>
+                        </li>
+                        <li><a class="has-arrow waves-effect waves-dark " href="javascript:void(0) " aria-expanded="false "><i
+								class="fas fa-user "></i><span class="hide-menu ">Customer
+									Management</span></a>
+
+                            <ul aria-expanded="false " class="collapse ">
+                                <li><a th:href="@{/admin/customer/list} ">Customer List</a></li>
+                                <li><a th:href="@{/admin/customer/create} ">Create Customer</a></li>
+                            </ul>
+                        </li>
+                        <li><a class="has-arrow waves-effect waves-dark " href="javascript:void(0) " aria-expanded="false "><i
+								class=" fas fa-first-aid "></i><span class="hide-menu ">Vaccine Type
+									Management</span></a>
+
+                            <ul aria-expanded="false " class="collapse ">
+                                <li><a th:href="@{/admin/vaccine-type/list} ">Vaccine Type List</a></li>
+                                <li><a th:href="@{/admin/vaccine-type/create} ">Create Vaccine Type</a></li>
+                            </ul>
+                        </li>
+                        <li><a class="has-arrow waves-effect waves-dark " href="javascript:void(0) " aria-expanded="false "><i
+								class="fas fa-calendar-plus "></i><span class="hide-menu ">Vaccine
+									Management</span></a>
+
+                            <ul aria-expanded="false " class="collapse ">
+                                <li><a th:href="@{ '/admin/vaccine/list'} ">Vaccine List</a></li>
+                                <li><a th:href="@{ '/admin/vaccine/create'} ">Create Vaccine</a></li>
+                                <li><a th:href="@{/admin/vaccine/upload-file} ">Import Vaccine</a></li>
+                            </ul>
+                        </li>
+                        <li><a class="has-arrow waves-effect waves-dark " href="javascript:void(0) " aria-expanded="false "><i
+								class=" fas fa-list-alt "></i><span class="hide-menu ">Injection
+									Schedule</span></a>
+
+                            <ul aria-expanded="false " class="collapse ">
+                                <li><a th:href="@{/admin/schedule/list} ">Injection Schedule List</a></li>
+                                <li><a th:href="@{/admin/schedule/create} ">Create Injection
+										Schedule</a></li>
+                            </ul>
+                        </li>
+                        <li><a class="has-arrow waves-effect waves-dark " href="javascript:void(0) " aria-expanded="false "><i
+								class="fas fa-file-alt "></i><span class="hide-menu ">Injection
+									Result</span></a>
+
+                            <ul aria-expanded="false " class="collapse ">
+                                <li><a th:href="@{/admin/injection-result/list} ">Injection Result List</a></li>
+                                <li><a th:href="@{/admin/injection-result/create} ">Create Injection
+										Result</a></li>
+                            </ul>
+                        </li>
+                        <li><a class="has-arrow waves-effect waves-dark " href="javascript:void(0) " aria-expanded="false "><i
+								class="far fa-newspaper "></i><span class="hide-menu ">News</span></a>
+
+                            <ul aria-expanded="false " class="collapse ">
+                                <li><a th:href="@{/admin/news/list} ">News List</a></li>
+                                <li><a th:href="@{/admin/news/create} ">Create News</a></li>
+                            </ul>
+                        </li>
+                        <li><a class="has-arrow waves-effect waves-dark " href="javascript:void(0) " aria-expanded="false "><i
+								class=" fas fa-graduation-cap "></i><span class="hide-menu ">Report</span></a>
+
+                            <ul aria-expanded="false " class="collapse ">
+                                <li><a th:href="@{/admin/report-customer} ">Report Customer</a></li>
+                                <li><a th:href="@{/admin/report-result} ">Report Schedule Result</a></li>
+                                <li><a th:href="@{/admin/report/vaccine} ">Report Vaccine</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+        <div class="page-wrapper ">
+
+        </div>
+        <footer class="footer " th:fragment="footer"> © Copyright By AntiCovid2021
+        </footer>
+    </div>
+    <script src="http://localhost:8080/js/jquery-3.2.1.min.js "></script>
+    <script src="http://localhost:8080/js/popper.min.js "></script>
+    <script src="http://localhost:8080/js/bootstrap.min.js "></script>
+    <script src="http://localhost:8080/js/perfect-scrollbar.jquery.min.js "></script>
+    <script src="http://localhost:8080/js/waves.js "></script>
+    <script src="http://localhost:8080/js/sidebarmenu.js "></script>
+    <script src="http://localhost:8080/js/custom.min.js "></script>
+    <script src="http://localhost:8080/js/jquery.sparkline.min.js "></script>
+    <script src="http://localhost:8080/js/jquery.dataTables.min.js "></script>
+    <script src="http://localhost:8080/js/dataTables.responsive.min.js "></script>
+    <script src="http://localhost:8080/js/dataTables.buttons.min.js "></script>
+    <script>
+        function checkAll(ele) {
+            var checkboxes = document.getElementsByTagName('input');
+            if (ele.checked) {
+                for (var i = 0; i < checkboxes.length; i++) {
+                    if (checkboxes[i].type == 'checkbox') {
+                        checkboxes[i].checked = true;
+                    }
+                }
+            } else {
+                for (var i = 0; i < checkboxes.length; i++) {
+                    console.log(i)
+                    if (checkboxes[i].type == 'checkbox') {
+                        checkboxes[i].checked = false;
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

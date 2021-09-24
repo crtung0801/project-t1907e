@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	layout:decorator="layout">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- Tell the browser to be responsive to screen width -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" type="image/png" sizes="16x16"
+	href="../assets/images/favicon.png">
+<title>List Employee</title>
+<link rel="stylesheet" type="text/css"
+	href="http://localhost:8080/css/dataTables.bootstrap4.css">
+<link rel="stylesheet" type="text/css"
+	href="http://localhost:8080/css/responsive.dataTables.min.css">
+<!-- Custom CSS -->
+<link href="http://localhost:8080/css/style.min.css" rel="stylesheet">
+</head>
+
+<body class="skin-megna fixed-layout">
+	<div id="main-wrapper">
+		<th:block th:insert="template :: header">
+		</th:block>
+		<th:block th:insert="template :: menuLeft">
+		</th:block>
+		<div class="page-wrapper">
+			<div class="container-fluid">
+				<div class="row page-titles">
+					<div class="col-md-5 align-self-center">
+						<h4 class="text-themecolor">List Injection Result</h4>
+					</div>
+					<div class="col-md-7 align-self-center text-right">
+						<div class="d-flex justify-content-end align-items-center">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+								<li class="breadcrumb-item active">List Injection Result</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="table-responsive m-t-40">
+									<div id="config-table_wrapper"
+										class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+										<div class="row">
+											<div class="col-sm-12 col-md-6">
+												<div class="dataTables_length" id="config-table_length">
+													<label>Show <select name="config-table_length"
+														aria-controls="config-table"
+														class="form-control form-control-sm">
+															<option value="10">10</option>
+															<option value="25">25</option>
+															<option value="50">50</option>
+															<option value="100">100</option>
+													</select> entries
+													</label>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-6">
+												<div id="config-table_filter" class="dataTables_filter">
+													<form th:action="@{/admin/injection-result/page/1}">
+														<label>Search: <input type="text" name=keyword
+															class="form-control form-control-sm"
+															th:value="${keyword}" aria-controls="config-table">
+															&nbsp
+														</label>
+													</form>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12">
+												<table id="config-table"
+													class="table display table-bordered table-striped no-wrap dataTable no-footer dtr-inline"
+													role="grid" aria-describedby="config-table_info">
+													<thead>
+														<tr role="row">
+															<th><input type="checkbox" onchange="checkAll(this)"
+																name="chk[]" /></th>
+															<th>Customer</th>
+															<th>Vaccine name</th>
+															<th>Prevention</th>
+															<th>Injection</th>
+															<th>Date Of injection</th>
+															<th>Next Injection Date</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr th:each="result :${listResults}">
+															<td><input type="checkbox" th:name="idChecked"
+																th:value="${result.injectionResultId}" /></td>
+															<td>[[${result.customer.customerId}]]-[[${result.customer.fullName}]]-[[${result.customer.dateOfBirth}]]</td>
+															<td>[[${result.vaccine.vaccineName}]]</td>
+															<td>[[${result.prevention}]]</td>
+															<td>[[${result.numberOfInjection}]]</td>
+															<td>[[${result.injectionDate}]]</td>
+															<td>[[${result.nextInjectionDate}]]</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+										<div class="row p-t-20">
+											<div class="col-sm-12 col-md-5">
+												<div class="dataTables_info" id="config-table_info"
+													role="status" aria-live="polite">
+													<div>
+														<div th:if="${totalItems > 10 }">Showing
+															[[${currentPage}*0+1]] to [[${currentPage}*0+10]] of
+															[[${totalItems}]] entries</div>
+														<div th:unless="${totalItems >10}">Showing
+															[[${currentPage}*0+1]] to [[${totalItems}]] of
+															[[${totalItems}]] entries"</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-7">
+												<div class="dataTables_paginate paging_simple_numbers"
+													id="config-table_info">
+													<ul class="pagination">
+														<li
+															th:class="${currentPage > 1  ? 'paginate_button page-item active': 'paginate_button page-item disabled'}">
+															<a th:href="@{/admin/injection-result/page/1}"
+															aria-controls="config-table" data-dt-idx="0" tabindex="0"
+															class="page-link">First</a>
+														</li>
+														<li
+															th:class="${currentPage > 1 ? 'paginate_button page-item active' :  'paginate_button page-item disabled' }">
+															<a
+															th:href="@{'/admin/injection-result/page/'+${currentPage-1}}"
+															aria-controls="config-table" data-dt-idx="0" tabindex="0"
+															class="page-link">Previous</a>
+														</li>
+
+														<th:block th:if="${totalPages<=10}">
+															<li th:each="i:${#numbers.sequence(1,totalPages)}"
+																th:class=" ${i != currentPage ? 'paginate_button page-item active'  : 'paginate_button page-item disabled' }">
+																<a th:href="@{'/admin/injection-result/page/'+${i}}"
+																aria-controls="config-table" data-dt-idx="0"
+																tabindex="0" class="page-link">[[${i}]]</a>
+															</li>
+														</th:block>
+														<th:block th:if="${totalPages>10}">
+															<th:block
+																th:if="${currentPage<=5 || currentPage > totalPages-4">
+																<li th:each="i:${#numbers.sequence(1,5)}"
+																	th:class=" ${i != currentPage ? 'paginate_button page-item active'  : 'paginate_button page-item disabled' }">
+																	<a th:href="@{'/admin/injection-result/page/'+${i}}"
+																	aria-controls="config-table" data-dt-idx="0"
+																	tabindex="0" class="page-link">[[${i}]]</a>
+																</li>
+
+																<li th:each="i:${#numbers.sequence(6)}"
+																	th:class=" ${i != currentPage ? 'paginate_button page-item active'  : 'paginate_button page-item disabled' }">
+																	<a th:href="@{'/admin/injection-result/page/'+${i}}"
+																	aria-controls="config-table" data-dt-idx="0"
+																	tabindex="0" class="page-link">...</a>
+																</li>
+
+																<li
+																	th:each="i:${#numbers.sequence(totalPages-4,totalPages)}"
+																	th:class=" ${i != currentPage ? 'paginate_button page-item active'  : 'paginate_button page-item disabled' }">
+																	<a th:href="@{'/admin/injection-result/page/'+${i}}"
+																	aria-controls="config-table" data-dt-idx="0"
+																	tabindex="0" class="page-link">[[${i}]]</a>
+																</li>
+
+
+															</th:block>
+															<th:block
+																th:if="${currentPage>5 && currentPage < totalPages-4">
+																<a
+																	th:href="@{'/admin/injection-result/page/'+${currentPage-5}}"
+																	aria-controls="config-table" data-dt-idx="0"
+																	tabindex="0" class="page-link">...</a>
+																<li
+																	th:each="i:${#numbers.sequence(currentPage-4,currentPage+4)}"
+																	th:class=" ${i != currentPage ? 'paginate_button page-item active'  : 'paginate_button page-item disabled' }">
+																	<a th:href="@{'/admin/injection-result/page/'+${i}}"
+																	aria-controls="config-table" data-dt-idx="0"
+																	tabindex="0" class="page-link">[[${i}]]</a>
+																</li>
+																<a
+																	th:href="@{'/admin/injection-result/page/'+${currentPage+5}}"
+																	aria-controls="config-table" data-dt-idx="0"
+																	tabindex="0" class="page-link">...</a>
+
+															</th:block>
+
+														</th:block>
+														<li
+															th:class="${currentPage < totalPages ? 'paginate_button page-item next' :'paginate_button page-item disabled' }">
+															<a
+															th:href="@{'/admin/injection-result/page/'+${currentPage+1}}"
+															aria-controls="config-table" data-dt-idx="0" tabindex="0"
+															class="page-link">Next</a>
+														</li>
+														<li
+															th:class="${currentPage < totalPages ? 'paginate_button page-item next' :'paginate_button page-item disabled' }">
+															<a
+															th:href="@{'/admin/injection-result/page/'+${totalPage}}"
+															aria-controls="config-table" data-dt-idx="0" tabindex="0"
+															class="page-link">Last</a>
+														</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+										
+										<div class="button-cfg">
+													<button type="button" class="btn btn-success ">
+														<a th:href="@{/admin/injection-result/create}"
+															style="color: white">Create Injection Result</a>
+													</button>
+													<button type="button" class="btn btn-warning ">
+														<a th:href="@{/admin/injection-result/update/{id}}"
+															style="color: white">Update Injection Result</a>
+													</button>
+													<button onclick="return confirm('Are you sure?')"
+														type="submit" name='delete' value="delete"
+														class='btn btn-danger'
+														th:href="@{/admin/injection-result/delete}"
+														th:title="#{delete.selected}">Delete Injection
+														Result</button>
+												</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<th:block th:insert="template :: footer">
+		</th:block>
+		<!-- ============================================================== -->
+		<!-- End footer -->
+		<!-- ============================================================== -->
+	</div>
+	<!-- ============================================================== -->
+	<!-- End Wrapper -->
+	<!-- ============================================================== -->
+	<!-- ============================================================== -->
+	<!-- All Jquery -->
+	<!-- ============================================================== -->
+	<script src="http://localhost:8080/js/jquery-3.2.1.min.js"></script>
+	<!-- Bootstrap tether Core JavaScript -->
+	<script src="http://localhost:8080/js/popper.min.js"></script>
+	<script src="http://localhost:8080/js/bootstrap.min.js"></script>
+	<!-- slimscrollbar scrollbar JavaScript -->
+	<script src="http://localhost:8080/js/perfect-scrollbar.jquery.min.js"></script>
+	<!--Wave Effects -->
+	<script src="http://localhost:8080/js/waves.js"></script>
+	<!--Menu sidebar -->
+	<script src="http://localhost:8080/js/sidebarmenu.js"></script>
+	<!--stickey kit -->
+	<script src="http://localhost:8080/js/sticky-kit.min.js"></script>
+	<script src="http://localhost:8080/js/jquery.sparkline.min.js"></script>
+	<!--Custom JavaScript -->
+	<script src="http://localhost:8080/js/custom.min.js"></script>
+	<!-- This is data table -->
+	<script src="http://localhost:8080/js/jquery.dataTables.min.js"></script>
+	<script src="http://localhost:8080/js/dataTables.responsive.min.js"></script>
+	<!-- start - This is for export functionality only -->
+	<script src="http://localhost:8080/js/dataTables.buttons.min.js"></script>
+	<script src="http://localhost:8080/js/buttons.flash.min.js"></script>
+	<script src="http://localhost:8080/js/jszip.min.js"></script>
+	<script src="http://localhost:8080/js/pdfmake.min.js"></script>
+	<script src="http://localhost:8080/js/vfs_fonts.js"></script>
+	<script src="http://localhost:8080/js/buttons.print.min.js"></script>
+	<!-- end - This is for export functionality only -->
+	<script>
+		function checkAll(ele) {
+			var checkboxes = document.getElementsByTagName('input');
+			if (ele.checked) {
+				for (var i = 0; i < checkboxes.length; i++) {
+					if (checkboxes[i].type == 'checkbox') {
+						checkboxes[i].checked = true;
+					}
+				}
+			} else {
+				for (var i = 0; i < checkboxes.length; i++) {
+					console.log(i)
+					if (checkboxes[i].type == 'checkbox') {
+						checkboxes[i].checked = false;
+					}
+				}
+			}
+		}
+	</script>
+</body>
+
+</html>

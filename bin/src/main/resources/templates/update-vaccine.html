@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- Tell the browser to be responsive to screen width -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16"
+	href="../assets/images/favicon.png">
+<title>Elite Hospital Admin Template - Hospital admin dashboard
+	web app kit</title>
+
+<link rel="stylesheet" href="http://localhost:8080/css/dropify.min.css">
+<link href="http://localhost:8080/css/style.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css"
+	href="http://localhost:8080/css/jquery.datetimepicker.css">
+<style>
+.form-row span {
+	color: red;
+}
+
+.bot {
+	padding: 50px 0 50px 0
+}
+</style>
+</head>
+
+<body class="skin-megna fixed-layout">
+	<div id="main-wrapper">
+		<!-- ============================================================== -->
+		<!-- Topbar header - style you can find in pages.scss -->
+		<!-- ============================================================== -->
+		<header class="topbar">
+			<nav class="navbar top-navbar navbar-expand-md navbar-dark">
+				<!-- ============================================================== -->
+				<!-- Logo -->
+				<!-- ============================================================== -->
+				<div class="navbar-header">
+					<a class="navbar-brand" href="index.html"> <!-- Logo icon --> <b>
+							<!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+							<!-- Dark Logo icon --> <img src="images/logo-icon.png"
+							alt="homepage" class="dark-logo" /> <!-- Light Logo icon --> <img
+							src="images/logo-light-icon.png" alt="homepage"
+							class="light-logo" />
+					</b> <!--End Logo icon --> <span class="hidden-xs"><span
+							class="font-bold">elite</span>hospital</span>
+					</a>
+				</div>
+				<!-- ============================================================== -->
+				<!-- End Logo -->
+				<!-- ============================================================== -->
+				<div class="navbar-collapse">
+					<!-- ============================================================== -->
+					<!-- toggle and nav items -->
+					<!-- ============================================================== -->
+					<ul class="navbar-nav mr-auto">
+						<!-- This is  -->
+						<!-- ============================================================== -->
+						<!-- Search -->
+						<!-- ============================================================== -->
+					</ul>
+					<!-- ============================================================== -->
+					<!-- User profile and search -->
+					<!-- ============================================================== -->
+					<ul class="navbar-nav my-lg-0">
+						<li class="nav-item">
+							<form class="app-search d-none d-md-block d-lg-block">
+								<input type="text" class="form-control"
+									placeholder="Search & enter">
+							</form>
+						</li>
+						<li>&nbsp;&nbsp;</li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+		<!-- ============================================================== -->
+		<!-- End Topbar header -->
+		<!-- ============================================================== -->
+		<!-- ============================================================== -->
+		<!-- Left Sidebar - style you can find in sidebar.scss  -->
+		<!-- ============================================================== -->
+		<aside class="left-sidebar">
+			<!-- Sidebar scroll-->
+			<div class="scroll-sidebar">
+				<!-- Sidebar navigation-->
+				<nav class="sidebar-nav">
+					<ul id="sidebarnav">
+						<li class="user-pro"><a
+							class="has-arrow waves-effect waves-dark"
+							href="javascript:void(0)" aria-expanded="false"><img
+								src="images/users/1.jpg" alt="user-img" class="img-circle"><span
+								class="hide-menu">Admin</span></a>
+							<ul aria-expanded="false" class="collapse">
+								<li><a href="javascript:void(0)"><i class="ti-user"></i>
+										My Profile</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="fa fa-power-off"></i> Logout</a></li>
+							</ul></li>
+						<li><a class="waves-effect waves-dark" href="index.html"><i
+								class="icon-speedometer"></i>HOME</a></li>
+						<li><a class="has-arrow waves-effect waves-dark"
+							href="javascript:void(0)" aria-expanded="false"><i
+								class="ti-email"></i><span class="hide-menu">Employee
+									Management</span></a>
+							<ul aria-expanded="false" class="collapse">
+								<li><a href="#">Employee List</a></li>
+								<li><a href="#">Create Employee</a></li>
+							</ul></li>
+						<li><a class="has-arrow waves-effect waves-dark"
+							href="javascript:void(0)" aria-expanded="false"><i
+								class="ti-email"></i><span class="hide-menu">Customer
+									Management</span></a>
+
+							<ul aria-expanded="false" class="collapse">
+								<li><a href="app-email.html">Customer List</a></li>
+								<li><a href="app-email-detail.html">Create Customer</a></li>
+							</ul></li>
+						<li><a class="has-arrow waves-effect waves-dark"
+							href="javascript:void(0)" aria-expanded="false"><i
+								class="ti-email"></i><span class="hide-menu">Vaccine Type
+									Management</span></a>
+
+							<ul aria-expanded="false" class="collapse">
+								<li><a href="app-email.html">Vaccine Type List</a></li>
+								<li><a href="app-email-detail.html">Create Vaccine Type</a></li>
+							</ul></li>
+						<li><a class="has-arrow waves-effect waves-dark"
+							href="javascript:void(0)" aria-expanded="false"><i
+								class="ti-email"></i><span class="hide-menu">Vaccine
+									Management</span></a>
+
+							<ul aria-expanded="false" class="collapse">
+								<li><a href="app-email.html">Vaccine List</a></li>
+								<li><a href="app-email-detail.html">Create Vaccine</a></li>
+								<li><a href="app-email-detail.html">Import Vaccine</a></li>
+							</ul></li>
+						<li><a class="has-arrow waves-effect waves-dark"
+							href="javascript:void(0)" aria-expanded="false"><i
+								class="ti-email"></i><span class="hide-menu">Injection
+									Schedule</span></a>
+
+							<ul aria-expanded="false" class="collapse">
+								<li><a href="app-email.html">Injection Schedule List</a></li>
+								<li><a href="app-email-detail.html">Create Injection
+										Schedule</a></li>
+							</ul></li>
+						<li><a class="has-arrow waves-effect waves-dark"
+							href="javascript:void(0)" aria-expanded="false"><i
+								class="ti-email"></i><span class="hide-menu">Injection
+									Result</span></a>
+
+							<ul aria-expanded="false" class="collapse">
+								<li><a href="app-email.html">Injection Result List</a></li>
+								<li><a href="app-email-detail.html">Create Injection
+										Result</a></li>
+							</ul></li>
+						<li><a class="has-arrow waves-effect waves-dark"
+							href="javascript:void(0)" aria-expanded="false"><i
+								class="ti-email"></i><span class="hide-menu">News</span></a>
+
+							<ul aria-expanded="false" class="collapse">
+								<li><a href="app-email.html">News List</a></li>
+								<li><a href="app-email-detail.html">Create News</a></li>
+							</ul></li>
+						<li><a class="has-arrow waves-effect waves-dark"
+							href="javascript:void(0)" aria-expanded="false"><i
+								class="ti-email"></i><span class="hide-menu">Report</span></a>
+
+							<ul aria-expanded="false" class="collapse">
+								<li><a href="app-email.html">Report List</a></li>
+								<li><a href="app-email-detail.html">Create Report</a></li>
+							</ul></li>
+
+					</ul>
+				</nav>
+				<!-- End Sidebar navigation -->
+			</div>
+			<!-- End Sidebar scroll-->
+		</aside>
+		<!-- ============================================================== -->
+		<!-- End Left Sidebar - style you can find in sidebar.scss  -->
+		<!-- ============================================================== -->
+		<!-- ============================================================== -->
+		<!-- Page wrapper  -->
+		<!-- ============================================================== -->
+		<div class="page-wrapper">
+			<!-- ============================================================== -->
+			<!-- Container fluid  -->
+			<!-- ============================================================== -->
+			<div class="container-fluid">
+				<!-- ============================================================== -->
+				<!-- Bread crumb and right sidebar toggle -->
+				<!-- ============================================================== -->
+				<div class="row page-titles">
+					<div class="col-md-5 align-self-center">
+						<h4 class="text-themecolor">CREATE VACCINE</h4>
+					</div>
+					<div class="col-md-7 align-self-center text-right">
+						<div class="d-flex justify-content-end align-items-center">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+								<li class="breadcrumb-item active">Create Vaccine</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+				<!-- ============================================================== -->
+				<!-- End Bread crumb and right sidebar toggle -->
+				<!-- ============================================================== -->
+				<!-- ============================================================== -->
+				<!-- Info box -->
+				<!-- ============================================================== -->
+				<!-- Row -->
+				<div class="row">
+					<div class="col-12">
+						<div class="card">
+							<div class="card-body">
+								<form class="needs-validation" name="myForm"
+									th:action="@{/admin/vaccine/save}" method="POST"
+									th:object="${vaccine}">
+									<div class="form-row">
+										<div class="col-12 d-flex justify-content-center">
+											<h5 class="text-danger m-1 p-2" th:text="${messagecheck}"></h5>
+										</div>
+										<div class="col-md-8 mb-3">
+											<label>Vaccine Id</label><span>(*)</span> <input type="text"
+												th:field="*{vaccineId}" class="form-control"
+												readonly="readonly">
+										</div>
+										<div class="col-md-4 mb-3">
+											<label for="validationCustom02">Active</label><span>(*)</span>
+											<div class="controls ">
+												<div class="custom-control custom-checkbox m-l-20">
+													<input type="checkbox" name="active" th:field="*{active}"
+														checked>
+
+												</div>
+												<span th:if="${#fields.hasErrors('active')}"
+													th:errors="*{active}"></span>
+											</div>
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="col-md-4 mb-3">
+											<label>Vaccine Name</label><span>(*)</span> <input
+												th:field="*{vaccineName}" type="text" class="form-control "
+												placeholder="Vaccine name" required="true">
+										</div>
+										<div class="col-md-4 mb-3">
+											<label for="validationCustom04">Vaccine Type</label> <span>(*)</span>
+											<select class="form-control custom-select "
+												th:field="*{vaccineType}" id="selectVaccine">
+												<option value="0" selected>---Select Vaccine
+													Type---</option>
+												<th:block th:each="type : ${vaccineTypes}">
+													<option th:text="${type.vaccineTypeName}"
+														th:value=${type.vaccineTypeId}></option>
+												</th:block>
+											</select>
+										</div>
+										<div class="col-md-4 mb-3">
+											<label for="validationCustom05">Number of inject</label> <input
+												type="text" class="form-control "
+												placeholder="Number of inject" name="numberOfInjection"
+												th:field="*{numberOfInjection}"
+												onkeypress="return validateNumber(event)"> <span
+												th:if="${#fields.hasErrors('numberOfInjection')}"
+												th:errors="*{numberOfInjection}"></span>
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="col-md-4 mb-3">
+											<label>Usage:</label>
+											<textarea rows="5" class="form-control " name="usage"
+												placeholder="Ussage" aria-invalid="false"
+												th:field="*{usage}"></textarea>
+										</div>
+										<div class="col-md-4 mb-3">
+											<label>Indication</label>
+											<textarea rows="5" class="form-control" name="indication"
+												placeholder="Indication" aria-invalid="false"
+												th:field="*{indication}"></textarea>
+										</div>
+										<div class="col-md-4 mb-3">
+											<label>Contraindication</label>
+											<textarea rows="5" class="form-control "
+												name="contraindication" placeholder="Contraindication"
+												aria-invalid="false" th:field="*{contraindication}"></textarea>
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="col-lg-4 col-md-3">
+											<label>Time of begining next Injection</label> <input
+												type="date" name="timeBeginNextInjection"
+												class="form-control " id="startDate"
+												th:field="*{timeBeginNextInjection}"> <span
+												th:if="${#fields.hasErrors('timeBeginNextInjection')}"
+												th:errors="*{timeBeginNextInjection}"></span>
+
+										</div>
+										<div class="col-lg-4 col-md-3">
+											<label>Time of ending next Injection</label> <input
+												type="date" class="form-control " id="endDate"
+												name="timeEndNextInjection"
+												th:field="*{timeEndNextInjection}"> <span
+												th:if="${#fields.hasErrors('timeEndNextInjection')}"
+												th:errors="*{timeEndNextInjection}"></span>
+										</div>
+										<div class="col-lg-4 col-md-3">
+											<label for="validationCustom05">Origin</label> <input
+												type="text" class="form-control " placeholder="Origin"
+												name="origin" th:field="*{origin}">
+										</div>
+									</div>
+									<div class="bot">
+										<button class="btn btn-success" type="submit"
+											onclick="return  numberValidation()">Save</button>
+										<button class="btn btn-info" type="reset">Reset</button>
+										<button class="btn btn-warning" type="cancel">Cancel</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<footer class="footer"> © 2020 Eliteadmin by AntiCovid2021 </footer>
+		<script src="http://localhost:8080/js/jquery-3.2.1.min.js"></script>
+		<!-- Bootstrap tether Core JavaScript -->
+		<script src="http://localhost:8080/js/popper.min.js"></script>
+		<script src="http://localhost:8080/js/bootstrap.min.js"></script>
+		<!-- slimscrollbar scrollbar JavaScript -->
+		<script src="http://localhost:8080/js/perfect-scrollbar.jquery.min.js"></script>
+
+		<script
+			src="http://localhost:8080/js/jquery.datetimepicker.full.min.js"></script>
+		<!--Wave Effects -->
+		<script src="http://localhost:8080/js/waves.js"></script>
+		<!--Menu sidebar -->
+		<script src="http://localhost:8080/js/sidebarmenu.js"></script>
+		<!--stickey kit -->
+		<script src="http://localhost:8080/js/sticky-kit.min.js"></script>
+		<script src="http://localhost:8080/js/jquery.sparkline.min.js"></script>
+		<!--Custom JavaScript -->
+		<script src="http://localhost:8080/js/custom.min.js"></script>
+		<script src="http://localhost:8080/js/dropify.min.js"></script>
+		<script>
+			function validateNumber(e) {
+				const pattern = /^[0-9]$/;
+
+				return pattern.test(e.key)
+			}
+
+			$("#startDate").datetimepicker(
+					{
+						timepicker : false,
+						datepicker : true,
+						format : 'Y-m-d',
+						onShow : function(ct) {
+							this.setOptions({
+								maxDate : $('#endDate').val() ? $('#endDate')
+										.val() : false
+							})
+						}
+					})
+
+			$("#endDate").datetimepicker(
+					{
+						timepicker : false,
+						datepicker : true,
+						format : 'Y-m-d',
+						onShow : function(ct) {
+							this.setOptions({
+								minDate : $('#startDate').val() ? $(
+										'#startDate').val() : false
+							})
+						}
+					})
+		</script>
+</body>
+
+</html>

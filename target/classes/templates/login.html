@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	layout:decorator="layout">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- Tell the browser to be responsive to screen width -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" type="image/png" sizes="16x16"
+	href="../assets/images/favicon.png">
+<title>Login</title>
+<link href="./css/login-register-lock.css" rel="stylesheet">
+<link href="./css/style.min.css" rel="stylesheet">
+</head>
+
+<body class="skin-default card-no-border">
+	<!-- ============================================================== -->
+	<!-- Preloader - style you can find in spinners.css -->
+	<!-- ============================================================== -->
+	<!-- ============================================================== -->
+	<!-- Main wrapper - style you can find in pages.scss -->
+	<!-- ============================================================== -->
+	<section id="wrapper">
+
+		<div class="login-register"
+			style="background-image: url(images/dco.jpg);">
+
+			<div class="login-box card">
+				<div class="card-body">
+					<form class="form-horizontal form-material" id="loginform"
+						th:action="@{/login}" method="POST">
+						<h3 class="text-center m-b-20">Sign In</h3>
+						<div class="form-group ">
+							<div class="col-xs-12">
+								<input class="form-control" type="text" required=""
+									placeholder="Username" name="username">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-xs-12">
+								<input class="form-control" type="password" required=""
+									placeholder="Password" name="password">
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-md-12">
+								<div class="d-flex no-block align-items-center">
+									<div class="custom-control custom-checkbox">
+										<input input type="checkbox" class="custom-control-input"
+											id="customCheck1" name="remember-me"> <label
+											class="custom-control-label" for="customCheck1">Remember
+											me</label>
+									</div>
+									<div class="ml-auto">
+										<a href="javascript:void(0)" id="to-recover"
+											class="text-muted"><i class="fas fa-lock m-r-5"></i>
+											Forgot pwd?</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group text-center">
+							<div class="col-xs-12 p-b-20">
+								<button class="btn btn-block btn-lg btn-info btn-rounded"
+									type="submit">Log In</button>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
+								<div class="social">
+									<!--  <button class="btn  btn-facebook" data-toggle="tooltip" title="Login with Facebook">  </button> -->
+									<a class="btn  btn-facebook" data-toggle="tooltip"
+										title="Login with Facebook"
+										href="https://www.facebook.com/dialog/oauth?client_id=886078882253962&redirect_uri=http://localhost:8080/login-facebook"><i
+										aria-hidden="true" class="fab fa-facebook-f"></i></a> <a
+										class="btn btn-googleplus" data-toggle="tooltip"
+										title="Login with Google"
+										href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8080/login-google&response_type=code
+		&client_id=80724656105-fg2ndheoujm7c7dd4ob1i9mq3ebdbjhb.apps.googleusercontent.com&approval_prompt=force"><i
+										aria-hidden="true" class="fab fa-google-plus-g"></i></a>
+								</div>
+							</div>
+						</div>
+						<div class="form-group m-b-0">
+							<div class="col-sm-12 text-center">
+								Don't have an account? <a href="pages-register.html"
+									class="text-info m-l-5"><b>Sign Up</b></a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ============================================================== -->
+	<!-- End Wrapper -->
+	<!-- ============================================================== -->
+	<!-- ============================================================== -->
+	<!-- All Jquery -->
+	<!-- ============================================================== -->
+	<script src="./js/jquery-3.2.1.min.js"></script>
+	<!-- Bootstrap tether Core JavaScript -->
+	<script src="./js/popper.min.js"></script>
+	<script src="./js/bootstrap.min.js"></script>
+
+
+</body>
+
+</html>

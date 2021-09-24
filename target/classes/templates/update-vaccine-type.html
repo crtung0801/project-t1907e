@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- Tell the browser to be responsive to screen width -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16" href="">
+<title>Update Vaccine Type</title>
+
+<link rel="stylesheet" th:href="@{/css/dropify.min.css}">
+<link th:href="@{/css/style.min.css}" rel="stylesheet">
+</head>
+
+<body class="skin-megna fixed-layout">
+	<div id="main-wrapper">
+		<header class="topbar" th:replace="fragments :: header"></header>
+		<aside class="left-sidebar" th:replace="fragments :: menu"></aside>
+		<div class="page-wrapper">
+			<!-- ====== -->
+			<!-- Container fluid  -->
+			<!-- ====== -->
+			<div class="container-fluid">
+				<!-- ====== -->
+				<!-- Bread crumb and right sidebar toggle -->
+				<!-- ====== -->
+				<div class="row page-titles">
+					<div class="col-md-5 align-self-center">
+						<h4 class="text-themecolor">UPDATE VACCINE TYPE</h4>
+					</div>
+					<div class="col-md-7 align-self-center text-right">
+						<div class="d-flex justify-content-end align-items-center">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a th:href="@{/admin}">Home</a></li>
+								<li>Update vaccine type</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+				<!-- ====== -->
+				<!-- End Bread crumb and right sidebar toggle -->
+				<!-- ====== -->
+				<!-- ====== -->
+				<!-- Info box -->
+				<!-- ====== -->
+				<!-- Row -->
+				<div class="row">
+					<div class="col-12">
+						<div class="card">
+							<div class="card-body">
+								<form class="needs-validation"
+									th:action="@{/admin/vaccine-type/update}"
+									th:object="${vaccineType}" method="post"
+									enctype="multipart/form-data">
+									<div class="form-row">
+										<div class="col-md-4 mb-3">
+											<div class="card-title">
+												Vaccine Type Code <span class="text-danger">(*)</span>
+											</div> <input type="text" class="form-control"
+												th:field="*{vaccineTypeId}" placeholder="Vaccine type id"
+												disabled required> <input type="hidden"
+												th:field="*{vaccineTypeId}" th:value="${vaccineTypeId}" />
+										</div>
+										<div class="col-md-4 mb-3">
+											<div class="card-title">
+												Vaccine Type Name <span class="text-danger">(*)</span>
+											</div> <input type="text" class="form-control"
+												th:field="*{vaccineTypeName}"
+												placeholder="Vaccine type name" required>
+											<!-- <label th:if="${#fields.hasErrors('vaccineTypeName')}" th:errors="*{vaccineTypeName}"></label>  -->
+											<div class="alert alert-warning"
+												th:if="${#fields.hasErrors('vaccineTypeName')}"
+												th:errors="*{vaccineTypeName}"></div>
+											<div class="col-12 d-flex justify-content-center"></div>
+
+										</div>
+										<div class="col-md-4 mb-3">
+											<div class="card-title">
+												Active<span class="text-danger">(*)</span>
+											</div>
+											<div class="form-check" style="display: flex;">
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" id="customRadio1"
+														th:field="*{status}">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="col-md-8">
+											<div class="card-title">
+												Description
+											</div>
+											<textarea class="form-control"
+												placeholder="Description for vaccine type"
+												th:field="*{description}" rows="3"></textarea>
+										</div>
+
+									</div>
+									<div class="form-row">
+										<div class="col-lg-4 col-md-4">
+											<div class="card">
+												<div class="card-title">Image</div>
+												<input type="file" id="input-file-max-fs" accept="image/*"
+													name="file" class="dropify" data-max-file-size="2M" />
+											</div>
+											<div class="alert alert-warning"
+												th:unless="${errorImage} ==null"
+												th:text="${errorImage}"></div>
+										</div>
+										<div th:unless="${vaccineType.image}== null"
+											class="col-lg-4 col-md-4">
+											<div class="card">
+												<div class="card-title">Current</div>
+												<img th:unless="${imageName} == null"
+													style="width: 200px; height: 200px;"
+													th:src="@{/admin/image/} + ${imageName}"> <input
+													type="hidden" th:field="*{image}"> <img
+													th:unless="${replaceImage} == null"
+													style="width: 200px; height: 200px;"
+													th:src="@{/admin/image/} + ${replaceImage}">
+												<!-- <input type="text" th:field="${test}"/> -->
+											</div>
+										</div>
+
+									</div>
+									<button class="btn btn-success" type="submit">Save</button>
+									<button class="btn btn-primary" type="reset">Reset</button>
+
+									<a class="btn btn-warning"
+										th:href="@{/admin/vaccine-type/list}">Cancel</a>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer" th:replace="fragments :: footer"></div>
+	</div>
+	<!-- ====== -->
+	<!-- End Wrapper -->
+	<!-- ====== -->
+	<!-- ====== -->
+	<!-- All Jquery -->
+	<!-- ====== -->
+	<script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+	<!-- Bootstrap tether Core JavaScript -->
+	<script th:src="@{/js/popper.min.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<!-- slimscrollbar scrollbar JavaScript -->
+	<script th:src="@{/js/perfect-scrollbar.jquery.min.js}"></script>
+	<!--Wave Effects -->
+	<script th:src="@{/js/waves.js}"></script>
+	<!--Menu sidebar -->
+	<script th:src="@{/js/sidebarmenu.js}"></script>
+	<!--stickey kit -->
+	<script th:src="@{/js/sticky-kit.min.js}"></script>
+	<script th:src="@{/js/jquery.sparkline.min.js}"></script>
+	<!--Custom JavaScript -->
+	<script th:src="@{/js/custom.min.js}"></script>
+	<script th:src="@{/js/dropify.min.js}"></script>
+	<script>
+        $(document).ready(function() {
+            // Basic
+            $('.dropify').dropify();
+
+            // Translated
+            $('.dropify-fr').dropify({
+                messages: {
+                    default: 'Glissez-déposez un fichier ici ou cliquez',
+                    replace: 'Glissez-déposez un fichier ou cliquez pour remplacer',
+                    remove: 'Supprimer',
+                    error: 'Désolé, le fichier trop volumineux'
+                }
+            });
+
+            // Used events
+            var drEvent = $('#input-file-events').dropify();
+
+            drEvent.on('dropify.beforeClear', function(event, element) {
+                return confirm("Do you really want to delete \"" + element.file.name + "\" ?");
+            });
+
+            drEvent.on('dropify.afterClear', function(event, element) {
+                alert('File deleted');
+            });
+
+            drEvent.on('dropify.errors', function(event, element) {
+                console.log('Has Errors');
+            });
+
+            var drDestroy = $('#input-file-to-destroy').dropify();
+            drDestroy = drDestroy.data('dropify')
+            $('#toggleDropify').on('click', function(e) {
+                e.preventDefault();
+                if (drDestroy.isDropified()) {
+                    drDestroy.destroy();
+                } else {
+                    drDestroy.init();
+                }
+            })
+        });
+
+    </script>
+</body>
+
+</html>

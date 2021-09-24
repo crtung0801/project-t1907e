@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>List vaccine</title>
+<link rel="stylesheet" th:href="@{/css/style.min.css}">
+<link rel="stylesheet" th:href="@{/css/dataTables.bootstrap4.css}">
+<link rel="stylesheet" th:href="@{/css/responsive.dataTables.min.css}">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+</head>
+
+<body class="skin-megna fixed-layout">
+	<div id="main-wrapper">
+		<header class="topbar" th:replace="fragments :: header"></header>
+		<aside class="left-sidebar" th:replace="fragments :: menu"></aside>
+		<div class="page-wrapper">
+			<div class="container-fluid">
+				<div class="row page-titles">
+					<div class="col-md-5 align-self-center">
+						<h4 class="text-themecolor">REPORT INJECTION RESULT</h4>
+					</div>
+					<div class="col-md-7 align-self-center text-right">
+						<div class="d-flex justify-content-end align-items-center">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+								<li class="breadcrumb-item active">Report Injection Result</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="table-responsive">
+									<div id="config-table_wrapper"
+										class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+										<div class="row p-b-30">
+											<div class="col-sm-12 col-md-2">
+												<h4 class="card-title">Display Type:</h4>
+												<div class="form-check"
+													style="display: flex; padding-top: 10px;">
+													<div class="custom-control custom-radio">
+														<input value="1" type="radio" id="customRadio1"
+															th:value="@{/admin/report-result}"
+															onclick="location.href=(this.value)" name="report"
+															class="custom-control-input"> <label
+															class="custom-control-label" for="customRadio1">Report</label>
+													</div>
+													<div class="custom-control custom-radio ml-5">
+														<input value="2" type="radio" id="customRadio2" checked
+															class="custom-control-input"> <label
+															class="custom-control-label" for="customRadio2">Chart</label>
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-2">
+												<form action="/admin/chart-result" method="GET">
+
+													<h4 class="card-title">Select Year</h4>
+													<select class="form-control custom-select " name="year"
+														id="myselect" onchange="this.form.submit()">
+														<th:block th:each="i : ${listYear}">
+															<option th:selected="${i.equals(year)}" th:value="${i}"
+																th:text="${i}"></option>
+														</th:block>
+													</select>
+												</form>
+											</div>
+										</div>
+										<hr>
+										<div class="row p-t-30">
+											<div class="col-sm-12 col-md-10">
+												<canvas id="myChart"></canvas>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer" th:replace="fragments :: footer"></div>
+	</div>
+</body>
+<script type="text/javascript" th:inline="javascript">
+	/*<![CDATA[*/
+	let myChart = document.getElementById('myChart').getContext('2d');
+	// Global Options
+
+	Chart.defaults.global.defaultFontSize = 10;
+	Chart.defaults.global.defaultFontColor = '#777';
+
+	let massPopChart = new Chart(myChart, {
+		type : 'bar',
+		data : {
+
+			labels : /*[[ ${label} ]]*/'',
+			datasets : [ {
+				label : 'InjectionResult',
+				data : /*[[ ${data} ]]*/'',
+				backgroundColor : 'rgba(111, 216, 237, 0.7)',
+
+				hoverBorderWidth : 1,
+				hoverBorderColor : '#000'
+			} ]
+		},
+		options : {
+			scales : {
+				yAxes : [ {
+					ticks : {
+						beginAtZero : true,
+						min : 0,
+
+					}
+				} ]
+			},
+
+			title : {
+				display : true,
+				text : 'Report Injection Result Chart',
+				fontSize : 25
+			},
+			legend : {
+				display : false,
+
+			},
+			layout : {
+				padding : {
+					left : 50,
+					right : 0,
+					bottom : 0,
+					top : 0
+				}
+			},
+			tooltips : {
+				enabled : true
+			}
+		}
+	});
+	/*]]>*/
+</script>
+<script th:src="@{/js/jquery-3.2.1.min.js} "></script>
+<script th:src="@{/js/popper.min.js }"></script>
+<script th:src="@{/js/bootstrap.min.js }"></script>
+<script th:src="@{/js/perfect-scrollbar.jquery.min.js }"></script>
+<script th:src="@{/js/waves.js }"></script>
+<script th:src="@{/js/sidebarmenu.js }"></script>
+<script th:src="@{/js/custom.min.js }"></script>
+<script th:src="@{/js/jquery.sparkline.min.js }"></script>
+<script th:src="@{/js/jquery.dataTables.min.js }"></script>
+<script th:src="@{/js/dataTables.responsive.min.js }"></script>
+<script th:src="@{/js/dataTables.buttons.min.js} "></script>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link href="http://localhost:8080/css/style.min.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="http://localhost:8080/css/dataTables.bootstrap4.css">
+<link rel="stylesheet"
+	href="http://localhost:8080/css/responsive.dataTables.min.css">
+</head>
+
+<body class="skin-megna fixed-layout">
+	<div id="main-wrapper">
+		<header class="topbar" th:replace="fragments :: header"></header>
+		<aside class="left-sidebar" th:replace="fragments :: menu"></aside>
+		<div class="page-wrapper">
+			<div class="container-fluid">
+				<div class="row page-titles">
+					<div class="col-md-5 align-self-center">
+						<h4 class="text-themecolor">Employee</h4>
+					</div>
+					<div class="col-md-7 align-self-center text-right">
+						<div class="d-flex justify-content-end align-items-center">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+								<li class="breadcrumb-item active">Employee</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12 d-flex justify-content-center">
+						<h5 class="text-danger m-1 p-2" th:text="${error}"></h5>
+					</div>
+					<div class="col-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="table-responsive m-t-40">
+									<div id="config-table_wrapper"
+										class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+										<div class="row">
+											<div class="col-sm-12 col-md-6">
+												<div class="dataTables_length" id="config-table_length">
+													<label>Show <select name="config-table_length"
+														aria-controls="config-table"
+														class="form-control form-control-sm">
+															<option value="10">10</option>
+															<option value="25">25</option>
+															<option value="50">50</option>
+															<option value="100">100</option>
+													</select> entries
+													</label>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-6">
+												<div id="config-table_filter" class="dataTables_filter">
+													<form th:action="@{/admin/employee/page/1}">
+														<label>Search: <input type="text" name=keyword
+															class="form-control form-control-sm"
+															th:value="${keyword}" aria-controls="config-table">
+															&nbsp
+														</label>
+													</form>
+												</div>
+											</div>
+										</div>
+										<form th:action="@{/admin/employee/delete}" method="POST">
+											<div class="row">
+												<div class="col-sm-12">
+													<table id="config-table"
+														class="table display table-bordered table-striped no-wrap dataTable no-footer dtr-inline"
+														role="grid" aria-describedby="config-table_info">
+														<thead>
+															<tr>
+																<th><input type="checkbox"
+																	onchange="checkAll(this)" name="chk[]" /></th>
+																<th>Employee ID</th>
+																<th>Employee Name</th>
+																<th>Date of Birth</th>
+																<th>Gender</th>
+																<th>Phone</th>
+																<th>Address</th>
+																<th>Action</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr th:each="employee :${listEmployee}">
+																<td><input type="checkbox" th:name="idChecked"
+																	th:value="${employee.employeeId}" /></td>
+																<td th:text="${employee.employeeId}"></td>
+																<td th:text="${employee.fullName}"></td>
+																<td th:text="${employee.birthDate}"></td>
+																<td th:text="${employee.gender}"></td>
+																<td th:text="${employee.phone}"></td>
+																<td th:text="${employee.address}"></td>
+																<td><a
+																	th:href="|@{/admin/employee/update?employeeId={employeeId}(employeeId=${employee.employeeId})}|">Edit</a>&nbsp;
+																	&nbsp; <a
+																	th:href="@{'/admin/employee/delete/'+${employee.employeeId}}"
+																	onclick="return confirm('Are you sure?')">Delete</a></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+											<div class="row p-t-20">
+												<div class="col-sm-12 col-md-5">
+													<div class="dataTables_info" id="config-table_info"
+														role="status" aria-live="polite">
+														<div>
+															<div th:if="${totalItems > 10 }">Showing to
+																[[${totalItems}]] of [[${endCount}]] entries"</div>
+															<div th:unless="${totalItems >10}">Showing to
+																[[${totalItems}]] of [[${endCount}]] entries"</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-12 col-md-7">
+													<div class="dataTables_paginate paging_simple_numbers"
+														id="config-table_info">
+														<ul class="pagination">
+															<li
+																th:class="${currentPage > 1 ? 'paginate_button page-item next': 'paginate_button page-item disabled'}">
+																<a th:href="@{/admin/employee/page/1}"
+																aria-controls="config-table" data-dt-idx="0"
+																tabindex="0" class="page-link">First</a>
+															</li>
+															<li
+																th:class="${currentPage > 1 ? 'paginate_button page-item next' : 'paginate_button page-item disabled' }">
+																<a th:href="@{'/admin/employee/page/'+${currentPage-1}}"
+																aria-controls="config-table" data-dt-idx="0"
+																tabindex="0" class="page-link">Previous</a>
+															</li>
+															<th:block th:if="${totalPages==0}">
+																<li class="paginate_button page-item disabled"><a
+																	th:href="@{'/admin/employee/page/1'}"
+																	aria-controls="config-table" data-dt-idx="0"
+																	tabindex="0" class="page-link">0</a></li>
+															</th:block>
+															<th:block th:if="${totalPages<=10 && totalPages>0}">
+																<li th:each="i:${#numbers.sequence(1,totalPages)}"
+																	th:class=" ${i != currentPage ? 'paginate_button page-item next' : 'paginate_button page-item active' }">
+																	<a th:href="@{'/admin/employee/page/'+${i}}"
+																	aria-controls="config-table" data-dt-idx="0"
+																	tabindex="0" class="page-link">[[${i}]]</a>
+																</li>
+															</th:block>
+															<th:block th:if="${totalPages>10}">
+																<th:block
+																	th:if="${currentPage <= 5 || currentPage > totalPages-4}">
+																	<li th:each="i:${#numbers.sequence(1,5)}"
+																		th:class=" ${i != currentPage ? 'paginate_button page-item next' : 'paginate_button page-item active' }">
+																		<a th:href="@{'/admin/employee/page/'+${i}}"
+																		aria-controls="config-table" data-dt-idx="0"
+																		tabindex="0" class="page-link">[[${i}]]</a>
+																	</li>
+
+																	<li th:each="i:${#numbers.sequence(6)}"
+																		th:class=" ${i != currentPage ? 'paginate_button page-item next' : 'paginate_button page-item active' }">
+																		<a th:href="@{'/admin/employee/page/'+${i}}"
+																		aria-controls="config-table" data-dt-idx="0"
+																		tabindex="0" class="page-link">...</a>
+																	</li>
+
+																	<li
+																		th:each="i:${#numbers.sequence(totalPages-4,totalPages)}"
+																		th:class=" ${i != currentPage ? 'paginate_button page-item next' : 'paginate_button page-item active' }">
+																		<a th:href="@{'/admin/employee/page/'+${i}}"
+																		aria-controls="config-table" data-dt-idx="0"
+																		tabindex="0" class="page-link">[[${i}]]</a>
+																	</li>
+
+
+																</th:block>
+																<th:block
+																	th:if="${currentPage>5 && currentPage < totalPages-4}">
+																	<a th:href="@{'/admin/employee/page/'+${currentPage-5}}"
+																		aria-controls="config-table" data-dt-idx="0"
+																		tabindex="0" class="page-link">...</a>
+																	<li
+																		th:each="i:${#numbers.sequence(currentPage-4,currentPage+4)}"
+																		th:class=" ${i != currentPage ? 'paginate_button page-item next' : 'paginate_button page-item active' }">
+																		<a th:href="@{'/admin/employee/page/'+${i}}"
+																		aria-controls="config-table" data-dt-idx="0"
+																		tabindex="0" class="page-link">[[${i}]]</a>
+																	</li>
+																	<a th:href="@{'/admin/employee/page/'+${currentPage+5}}"
+																		aria-controls="config-table" data-dt-idx="0"
+																		tabindex="0" class="page-link">...</a>
+
+																</th:block>
+
+															</th:block>
+															<li
+																th:class="${currentPage < totalPages ? 'paginate_button page-item next' :'paginate_button page-item disabled' }">
+																<a th:href="@{'/admin/employee/page/'+${currentPage+1}}"
+																aria-controls="config-table" data-dt-idx="0"
+																tabindex="0" class="page-link">Next</a>
+															</li>
+															<li
+																th:class="${currentPage < totalPages ? 'paginate_button page-item next' :'paginate_button page-item disabled' }">
+																<a th:href="@{'/admin/employee/page/'+${totalPages}}"
+																aria-controls="config-table" data-dt-idx="0"
+																tabindex="0" class="page-link">Last</a>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</div>
+
+											<div class="button-cfg">
+												<button type="button" class="btn btn-success ">
+													<a th:href="@{/admin/employee/create}" style="color: white">Create
+														Employee</a>
+												</button>
+												<button onclick="return confirm('Are you sure?')"
+													type="submit" name='delete' value="delete"
+													class='btn btn-danger' th:href="@{/admin/employee/delete}"
+													th:title="#{delete.selected}">Delete Employee</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer" th:replace="fragments :: footer"></div>
+	</div>
+</body>
+
+<script src="http://localhost:8080/js/jquery-3.2.1.min.js "></script>
+<script src="http://localhost:8080/js/popper.min.js "></script>
+<script src="http://localhost:8080/js/bootstrap.min.js "></script>
+<script src="http://localhost:8080/js/perfect-scrollbar.jquery.min.js "></script>
+<script src="http://localhost:8080/js/waves.js "></script>
+<script src="http://localhost:8080/js/sidebarmenu.js "></script>
+<script src="http://localhost:8080/js/custom.min.js "></script>
+<script src="http://localhost:8080/js/jquery.sparkline.min.js "></script>
+<script src="http://localhost:8080/js/jquery.dataTables.min.js "></script>
+<script src="http://localhost:8080/js/dataTables.responsive.min.js "></script>
+<script src="http://localhost:8080/js/dataTables.buttons.min.js "></script>
+
+<script>
+    function checkAll(ele) {
+        var checkboxes = document.getElementsByTagName('input');
+        if (ele.checked) {
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].type == 'checkbox') {
+                    checkboxes[i].checked = true;
+                }
+            }
+        } else {
+            for (var i = 0; i < checkboxes.length; i++) {
+                console.log(i)
+                if (checkboxes[i].type == 'checkbox') {
+                    checkboxes[i].checked = false;
+                }
+            }
+        }
+    }
+</script>
+
+</html>

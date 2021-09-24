@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link href="http://localhost:8080/css/style.min.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="http://localhost:8080/css/dataTables.bootstrap4.css">
+<link rel="stylesheet"
+	href="http://localhost:8080/css/responsive.dataTables.min.css">
+</head>
+
+<body class="skin-megna fixed-layout">
+	<div id="main-wrapper">
+		<header class="topbar" th:replace="fragments :: header"></header>
+		<aside class="left-sidebar" th:replace="fragments :: menu"></aside>
+		<div class="page-wrapper ">
+			<div class="container-fluid">
+				<div class="row page-titles">
+					<div class="col-md-5 align-self-center">
+						<h4 class="text-themecolor">List schedule</h4>
+					</div>
+					<div class="col-md-7 align-self-center text-right">
+						<div class="d-flex justify-content-end align-items-center">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+								<li class="breadcrumb-item next">List schedule</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">
+						<div class="alert alert-success alert-dismissible fade show"
+							role="alert" th:if="${successmessage}">
+							<strong th:text="${successmessage}"></strong>
+							<button type="button" class="close" data-dismiss="alert"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="alert alert-danger alert-dismissible fade show"
+							role="alert" th:if="${errormessage}">
+							<strong th:text="${errormessage}"></strong>
+							<button type="button" class="close" data-dismiss="alert"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<div class="card">
+							<div class="card-body">
+								<form action="" th:action="@{/admin/vaccine/fileuploadSave}"
+									th:object="${vaccine}" method="POST"
+									enctype="multipart/form-data">
+									<h4 class="card-title">File Upload</h4>
+									<div class="dropify-wrapper">
+										<div class="dropify-message">
+											<span class="file-icon"></span>
+										</div>
+										<div class="dropify-loader"></div>
+										<div class="dropify-errors-container">
+											<ul></ul>
+										</div>
+										<input type="file" id="file" name="file" th:field="*{file}"
+											class="dropify">
+										<button class="btn btn-success" type="submit">Save</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<div class="card">
+							<div class="card-body">
+								<h4 class="card-title">Vaccine List</h4>
+								<table id="config-table"
+									class="table display table-bordered table-striped no-wrap">
+									<thead>
+										<tr>
+											<th>Vaccine id</th>
+											<th>Vaccine name</th>
+											<th>Vaccine type</th>
+											<th>Number of injection</th>
+											<th>Origin</th>
+											<th>Status</th>
+										</tr>
+									</thead>
+									<tbody id="item">
+										<th:block th:each="vaccine : ${vaccines}">
+											<tr>
+												<td th:text="${vaccine.vaccineId}"></a></td>
+												<td th:text="${vaccine.vaccineName}"></td>
+												<td th:text="${vaccine.vaccineType.vaccineTypeName}"></td>
+												<td th:text="${vaccine.numberOfInjection}"></td>
+												<td th:text="${vaccine.origin}"></td>
+												<td th:text="${vaccine.active} ? 'Active' : 'In-Active'"
+													class="active"></td>
+											</tr>
+										</th:block>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="footer" th:replace="fragments :: footer"></div>
+		</div>
+</body>
+
+<script src="http://localhost:8080/js/jquery-3.2.1.min.js "></script>
+<script src="http://localhost:8080/js/popper.min.js "></script>
+<script src="http://localhost:8080/js/bootstrap.min.js "></script>
+<script src="http://localhost:8080/js/perfect-scrollbar.jquery.min.js "></script>
+<script src="http://localhost:8080/js/waves.js "></script>
+<script src="http://localhost:8080/js/sidebarmenu.js "></script>
+<script src="http://localhost:8080/js/custom.min.js "></script>
+<script src="http://localhost:8080/js/jquery.sparkline.min.js "></script>
+<script src="http://localhost:8080/js/jquery.dataTables.min.js "></script>
+<script src="http://localhost:8080/js/dataTables.responsive.min.js "></script>
+<script src="http://localhost:8080/js/dataTables.buttons.min.js "></script>
+
+</html>

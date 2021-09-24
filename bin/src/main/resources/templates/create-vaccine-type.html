@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- Tell the browser to be responsive to screen width -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16" href="">
+<title>Create Vaccine Type</title>
+
+<link rel="stylesheet" th:href="@{/css/dropify.min.css}">
+<link th:href="@{/css/style.min.css}" rel="stylesheet">
+</head>
+
+<body class="skin-megna fixed-layout">
+	<div id="main-wrapper">
+		<!-- ====== -->
+		<!-- Topbar header - style you can find in pages.scss -->
+		<!-- ====== -->
+		<th:block th:insert="template :: header">
+		</th:block>
+		<!-- ====== -->
+		<!-- End Topbar header -->
+		<!-- ====== -->
+		<!-- ====== -->
+		<!-- Left Sidebar - style you can find in sidebar.scss  -->
+		<!-- ====== -->
+		<th:block th:insert="template :: menuLeft">
+		</th:block>
+		<!-- ====== -->
+		<!-- End Left Sidebar - style you can find in sidebar.scss  -->
+		<!-- ====== -->
+		<!-- ====== -->
+		<!-- Page wrapper  -->
+		<!-- ====== -->
+		<div class="page-wrapper">
+			<!-- ====== -->
+			<!-- Container fluid  -->
+			<!-- ====== -->
+			<div class="container-fluid">
+				<!-- ====== -->
+				<!-- Bread crumb and right sidebar toggle -->
+				<!-- ====== -->
+				<div class="row page-titles">
+					<div class="col-md-5 align-self-center">
+						<h4 class="text-themecolor">CREATE VACCINE TYPE</h4>
+					</div>
+					<div class="col-md-7 align-self-center text-right">
+						<div class="d-flex justify-content-end align-items-center">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a th:href="@{/admin}">Home</a></li>
+								<li class="breadcrumb-item active">Create vaccine type</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+				<!-- ====== -->
+				<!-- End Bread crumb and right sidebar toggle -->
+				<!-- ====== -->
+				<!-- ====== -->
+				<!-- Info box -->
+				<!-- ====== -->
+				<!-- Row -->
+				<div class="row">
+					<div class="col-12">
+						<div class="card">
+							<div class="card-body">
+								<form class="needs-validation"
+									th:action="@{/admin/vaccine-type/save}"
+									th:object="${vaccineType}" method="post"
+									enctype="multipart/form-data">
+									<div class="form-row">
+										<div class="col-md-4 mb-3">
+											<label for="validationCustom01">Vaccine type code <span
+												class="text-danger">(*)</span>:
+											</label> <input type="text" class="form-control"
+												th:field="*{vaccineTypeId}" placeholder="Vaccine type id"
+												required>
+											<div class="alert alert-warning"
+												th:if="${#fields.hasErrors('vaccineTypeId')}"
+												th:errors="*{vaccineTypeId}"></div>
+											
+											<div class="alert alert-warning" th:unless="${messagecheckid} ==null"
+												th:text="${messagecheckid}"></div>											
+
+										</div>
+										<div class="col-md-4 mb-3">
+											<label for="validationCustom02">Vaccine type name<span
+												class="text-danger">(*)</span>
+											</label> <input type="text" class="form-control"
+												th:field="*{vaccineTypeName}"
+												placeholder="Vaccine type name" required>
+											<!-- <label th:if="${#fields.hasErrors('vaccineTypeName')}" th:errors="*{vaccineTypeName}"></label>  -->
+											<div class="alert alert-warning"
+												th:if="${#fields.hasErrors('vaccineTypeName')}"
+												th:errors="*{vaccineTypeName}"></div>
+
+										</div>
+										<div class="col-md-4 mb-3">
+											<label for="validationCustomUsername">Active <span
+												class="text-danger">(*)</span></label>
+											<div class="form-check" style="display: flex;">
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" checked id="customRadio1" disabled>
+													<input type="hidden" th:field="*{status}">
+												</div>
+
+											</div>
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="col-md-8">
+											<label for="validationCustom03">Description:</label>
+											<textarea class="form-control"
+												placeholder="Description for vaccine type"
+												th:field="*{description}" rows="3"></textarea>
+										</div>
+
+									</div>
+									<div class="form-row">
+										<div class="col-lg-4 col-md-4">
+											<div class="card">
+												<h4 class="card-title">Image</h4>
+												<input type="file" id="input-file-max-fs" accept="image/*"
+													name="file" class="dropify" data-max-file-size="2M" />
+											</div>
+										</div>
+									</div>
+									<button class="btn btn-success" type="submit">Save</button>
+									<button class="btn btn-primary" type="reset">Reset</button>
+
+									<a class="btn btn-warning"
+										th:href="@{/admin/vaccine-type/list}">Cancel</a>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<th:block th:insert="template :: footer">
+		</th:block>
+		<!-- ====== -->
+		<!-- End footer -->
+		<!-- ====== -->
+	</div>
+	<!-- ====== -->
+	<!-- End Wrapper -->
+	<!-- ====== -->
+	<!-- ====== -->
+	<!-- All Jquery -->
+	<!-- ====== -->
+	<script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+	<!-- Bootstrap tether Core JavaScript -->
+	<script th:src="@{/js/popper.min.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<!-- slimscrollbar scrollbar JavaScript -->
+	<script th:src="@{/js/perfect-scrollbar.jquery.min.js}"></script>
+	<!--Wave Effects -->
+	<script th:src="@{/js/waves.js}"></script>
+	<!--Menu sidebar -->
+	<script th:src="@{/js/sidebarmenu.js}"></script>
+	<!--stickey kit -->
+	<script th:src="@{/js/sticky-kit.min.js}"></script>
+	<script th:src="@{/js/jquery.sparkline.min.js}"></script>
+	<!--Custom JavaScript -->
+	<script th:src="@{/js/custom.min.js}"></script>
+	<script th:src="@{/js/dropify.min.js}"></script>
+	<script>
+        $(document).ready(function() {
+            // Basic
+            $('.dropify').dropify();
+
+            // Translated
+            $('.dropify-fr').dropify({
+                messages: {
+                    default: 'Glissez-déposez un fichier ici ou cliquez',
+                    replace: 'Glissez-déposez un fichier ou cliquez pour remplacer',
+                    remove: 'Supprimer',
+                    error: 'Désolé, le fichier trop volumineux'
+                }
+            });
+
+            // Used events
+            var drEvent = $('#input-file-events').dropify();
+
+            drEvent.on('dropify.beforeClear', function(event, element) {
+                return confirm("Do you really want to delete \"" + element.file.name + "\" ?");
+            });
+
+            drEvent.on('dropify.afterClear', function(event, element) {
+                alert('File deleted');
+            });
+
+            drEvent.on('dropify.errors', function(event, element) {
+                console.log('Has Errors');
+            });
+
+            var drDestroy = $('#input-file-to-destroy').dropify();
+            drDestroy = drDestroy.data('dropify')
+            $('#toggleDropify').on('click', function(e) {
+                e.preventDefault();
+                if (drDestroy.isDropified()) {
+                    drDestroy.destroy();
+                } else {
+                    drDestroy.init();
+                }
+            })
+        });
+
+    </script>
+</body>
+
+</html>

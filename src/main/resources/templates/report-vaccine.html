@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>List vaccine</title>
+<link rel="stylesheet" th:href="@{/css/style.min.css}">
+<link rel="stylesheet" th:href="@{/css/dataTables.bootstrap4.css}">
+<link rel="stylesheet" th:href="@{/css/responsive.dataTables.min.css}">
+</head>
+
+<body class="skin-megna fixed-layout">
+	<div id="main-wrapper">
+		<header class="topbar" th:replace="fragments :: header"></header>
+		<aside class="left-sidebar" th:replace="fragments :: menu"></aside>
+		<div class="page-wrapper">
+			<div class="container-fluid">
+				<div class="row page-titles">
+					<div class="col-md-5 align-self-center">
+						<h4 class="text-themecolor">REPORT VACCINE</h4>
+					</div>
+					<div class="col-md-7 align-self-center text-right">
+						<div class="d-flex justify-content-end align-items-center">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+								<li class="breadcrumb-item active">Report Vaccine</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="table-responsive">
+									<div id="config-table_wrapper"
+										class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+										<form th:action="@{/admin/report/vaccine/1}">
+											<div class="row p-b-30">
+												<div class="col-sm-12 col-md-2">
+													<h5 class="card-title">Display Type:</h5>
+													<div class="" style="display: flex; padding-top: 0px;">
+														<div >
+															<a class="fas fa-stethoscope" th:href="@{'/admin/report/vaccine'}"> REPORT </a>
+														<br>
+															<a class="fas fa-stethoscope" th:href="@{'/admin/report/chart/vaccine'}"> CHART</a> 
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-12 col-md-4">
+													<h5 class="card-title">Injection Date (Begin Time - End Time)</h5>
+													From: &nbsp <input type="date"
+														style="width: 38%; min-height: 38px;" name="startDate"
+														th:value="${startDate}"
+														class="form-control form-control-sm"
+														aria-controls="config-table"> &nbsp To: &nbsp <input
+														type="date" style="width: 38%; min-height: 38px"
+														name="endDate" th:value="${endDate}"
+														class="form-control form-control-sm"
+														aria-controls="config-table">
+												</div>
+												<div class="col-sm-12 col-md-2">
+													<h5 class="card-title">Select Vaccine Type</h5>
+													 <select class="form-control custom-select "
+														name="vaccineId"
+														th:value="${vaccineId}">
+														<option value="">---Select Vaccine
+															Type---</option>
+														<th:block th:each="vct : ${listVaccineTypes}">
+															<option th:value="${vct.vaccineTypeId}"
+																th:text="${vct.vaccineTypeName}"></option>
+														</th:block>
+													</select>
+
+												</div>
+												<div class="col-sm-12 col-md-2">
+													<h5 class="card-title">Origin</h5>
+													<input style="min-height: 38px;" type="text" name="origin"
+														th:value="${origin}" class="form-control form-control-sm"
+														aria-controls="config-table">
+												</div>
+												<div class="col-sm-12 col-md-2">
+													<h5 class="card-title">Action</h5>
+													<button style="min-height: 38px;" class="btn btn-success"
+														type="submit">Filter</button>
+													<button style="min-height: 38px;" class="btn btn-info"
+														type="button" onclick="clearFilter()">Cancel</button>
+												</div>
+											</div>
+										</form>
+										<hr>
+										<div class="row p-t-30">
+											<div class="col-sm-12">
+												<table id="config-table"
+													class="table display table-bordered table-striped no-wrap dataTable no-footer dtr-inline"
+													role="grid" aria-describedby="config-table_info">
+													<thead>
+														<tr role="row">
+															<th>Vaccine Name</th>
+															<th>Vaccine Type</th>
+															<th>Num Of Inject</th>
+															<th>Begin Next Inject Date</th>
+															<th>End Next Inject Date</th>
+															<th>Origin</th>
+
+														</tr>
+													</thead>
+													<tbody>
+														<tr th:each="vcc :${listVaccines}">
+															<td>[[${vcc.vaccineName}]]</td>
+															<td>[[${vcc.vaccineType.vaccineTypeName}]]</td>
+															<td>[[${vcc.numberOfInjection}]]</td>
+															<td>[[${vcc.timeBeginNextInjection}]]</td>
+															<td>[[${vcc.timeEndNextInjection}]]</td>
+															<td>[[${vcc.origin}]]</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+										 <div class="row p-t-20">
+												<div class="col-sm-12 col-md-5">
+													<div class="dataTables_info" id="config-table_info" th:if="${totalItems > 0}"
+														role="status" aria-live="polite">Showing
+														 [[${startCount}]] to [[${endCount}]] of [[${totalItems}]]
+														entries</div>
+														<div class="dataTables_info" id="config-table_info" th:unless="${totalItems > 0}"
+														role="status" aria-live="polite"></div>
+												</div>
+												<div class="col-sm-12 col-md-7">
+													<div class="dataTables_paginate paging_simple_numbers"
+														id="config-table_info">
+														<ul class="pagination">
+															<li
+																th:class="${currentPage > 1  ? 'paginate_button page-item next': 'paginate_button page-item disabled'}">
+																<a th:href="@{/admin/report/vaccine/1}"
+																aria-controls="config-table" data-dt-idx="0"
+																tabindex="0" class="page-link">First</a>
+															</li>
+															<li
+																th:class="${currentPage > 1 ? 'paginate_button page-item next' :  'paginate_button page-item disabled' }">
+																<a th:href="@{'/admin/report/vaccine/'+${currentPage-1}}"
+																aria-controls="config-table" data-dt-idx="0"
+																tabindex="0" class="page-link">Previous</a>
+															</li>
+															<th:block th:if="${totalPages==0}">
+																<li class="paginate_button page-item disabled"><a
+																	th:href="@{'/admin/report/vaccine/1'}"
+																	aria-controls="config-table" data-dt-idx="0"
+																	tabindex="0" class="page-link">0</a></li>
+															</th:block>
+															<th:block th:if="${totalPages<=10 && totalPages>0}">
+																<li th:each="i:${#numbers.sequence(1,totalPages)}"
+																	th:class=" ${i != currentPage ? 'paginate_button page-item next'  : 'paginate_button page-item active' }">
+																	<a th:href="@{'/admin/report/vaccine/'+${i}}"
+																	aria-controls="config-table" data-dt-idx="0"
+																	tabindex="0" class="page-link">[[${i}]]</a>
+																</li>
+															</th:block>
+															<th:block th:if="${totalPages>10}">
+																<th:block
+																	th:if="${currentPage <= 5 || currentPage > totalPages-4}">
+																	<li th:each="i:${#numbers.sequence(1,5)}"
+																		th:class=" ${i != currentPage ? 'paginate_button page-item next'  : 'paginate_button page-item active' }">
+																		<a th:href="@{'/admin/report/vaccine/'+${i}}"
+																		aria-controls="config-table" data-dt-idx="0"
+																		tabindex="0" class="page-link">[[${i}]]</a>
+																	</li>
+
+																	<li th:each="i:${#numbers.sequence(6)}"
+																		th:class=" ${i != currentPage ? 'paginate_button page-item next'  : 'paginate_button page-item active' }">
+																		<a th:href="@{'/admin/report/vaccine/'+${i}}"
+																		aria-controls="config-table" data-dt-idx="0"
+																		tabindex="0" class="page-link">...</a>
+																	</li>
+
+																	<li
+																		th:each="i:${#numbers.sequence(totalPages-4,totalPages)}"
+																		th:class=" ${i != currentPage ? 'paginate_button page-item next'  : 'paginate_button page-item active' }">
+																		<a th:href="@{'/admin/report/vaccine/'+${i}}"
+																		aria-controls="config-table" data-dt-idx="0"
+																		tabindex="0" class="page-link">[[${i}]]</a>
+																	</li>
+
+
+																</th:block>
+																<th:block
+																	th:if="${currentPage>5 && currentPage < totalPages-4}">
+																	<a
+																		th:href="@{'/admin/report/vaccine/'+${currentPage-5}}"
+																		aria-controls="config-table" data-dt-idx="0"
+																		tabindex="0" class="page-link">...</a>
+																	<li
+																		th:each="i:${#numbers.sequence(currentPage-4,currentPage+4)}"
+																		th:class=" ${i != currentPage ? 'paginate_button page-item next'  : 'paginate_button page-item active' }">
+																		<a th:href="@{'/admin/report/vaccine/'+${i}}"
+																		aria-controls="config-table" data-dt-idx="0"
+																		tabindex="0" class="page-link">[[${i}]]</a>
+																	</li>
+																	<a
+																		th:href="@{'/admin/report/vaccine/'+${currentPage+5}}"
+																		aria-controls="config-table" data-dt-idx="0"
+																		tabindex="0" class="page-link">...</a>
+
+																</th:block>
+
+															</th:block>
+															<li
+																th:class="${currentPage < totalPages ? 'paginate_button page-item next' :'paginate_button page-item disabled' }">
+																<a th:href="@{'/admin/report/vaccine/'+${currentPage+1}}"
+																aria-controls="config-table" data-dt-idx="0"
+																tabindex="0" class="page-link">Next</a>
+															</li>
+															<li
+																th:class="${currentPage < totalPages ? 'paginate_button page-item next' :'paginate_button page-item disabled' }">
+																<a th:href="@{'/admin/report/vaccine/'+${totalPages}}"
+																aria-controls="config-table" data-dt-idx="0"
+																tabindex="0" class="page-link">Last</a>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer" th:replace="fragments :: footer"></div>
+	</div>
+</body>
+<script type="text/javascript">
+	function clearFilter(){
+		window.location="/admin/report/vaccine"
+	}
+</script>
+
+<script th:src="@{/js/jquery-3.2.1.min.js} "></script>
+<script th:src="@{/js/popper.min.js }"></script>
+<script th:src="@{/js/bootstrap.min.js }"></script>
+<script th:src="@{/js/perfect-scrollbar.jquery.min.js }"></script>
+<script th:src="@{/js/waves.js }"></script>
+<script th:src="@{/js/sidebarmenu.js }"></script>
+<script th:src="@{/js/custom.min.js }"></script>
+<script th:src="@{/js/jquery.sparkline.min.js }"></script>
+<script th:src="@{/js/jquery.dataTables.min.js }"></script>
+<script th:src="@{/js/dataTables.responsive.min.js }"></script>
+<script th:src="@{/js/dataTables.buttons.min.js} "></script>
+</html>

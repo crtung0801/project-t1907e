@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	layout:decorator="layout">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- Tell the browser to be responsive to screen width -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16" href="">
+<title>Create Employee</title>
+
+<link rel="stylesheet" href="http://localhost:8080/css/dropify.min.css">
+<link href="http://localhost:8080/css/style.min.css" rel="stylesheet">
+</head>
+
+<body class="skin-megna fixed-layout">
+	<div id="main-wrapper">
+		<!-- ============================================================== -->
+		<!-- Topbar header - style you can find in pages.scss -->
+		<!-- ============================================================== -->
+		<header class="topbar">
+			<nav class="navbar top-navbar navbar-expand-md navbar-dark">
+				<!-- ============================================================== -->
+				<!-- Logo -->
+				<!-- ============================================================== -->
+				<div class="navbar-header">
+					<a class="navbar-brand" href="index.html"> <!-- Logo icon --> <b>
+							<!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+							<!-- Dark Logo icon --> <img
+							src="http://localhost:8080/images/logo-icon.png" alt="homepage"
+							class="dark-logo" /> <!-- Light Logo icon --> <img
+							src="http://localhost:8080/images/logo-light-icon.png"
+							alt="homepage" class="light-logo" />
+					</b> <!--End Logo icon --> <span class="hidden-xs"><span
+							class="font-bold">Anti</span>Covid</span>
+					</a>
+				</div>
+				<!-- ============================================================== -->
+				<!-- End Logo -->
+				<!-- ============================================================== -->
+				<div class="navbar-collapse">
+					<!-- ============================================================== -->
+					<!-- toggle and nav items -->
+					<!-- ============================================================== -->
+					<ul class="navbar-nav mr-auto">
+						<!-- This is  -->
+						<!-- ============================================================== -->
+						<!-- Search -->
+						<!-- ============================================================== -->
+					</ul>
+					<!-- ============================================================== -->
+					<!-- User profile and search -->
+					<!-- ============================================================== -->
+					<ul class="navbar-nav my-lg-0">
+						<li class="nav-item">
+							<form class="app-search d-none d-md-block d-lg-block">
+								<input type="text" class="form-control"
+									placeholder="Search & enter">
+							</form>
+						</li>
+						<li>&nbsp;&nbsp;</li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+		<!-- ============================================================== -->
+		<!-- End Topbar header -->
+		<!-- ============================================================== -->
+		<!-- ============================================================== -->
+		<!-- Left Sidebar - style you can find in sidebar.scss  -->
+		<!-- ============================================================== -->
+		<aside class="left-sidebar">
+			<!-- Sidebar scroll-->
+			<div class="scroll-sidebar">
+				<!-- Sidebar navigation-->
+				<nav class="sidebar-nav">
+					<ul id="sidebarnav">
+						<li class="user-pro"><a
+							class="has-arrow waves-effect waves-dark"
+							href="javascript:void(0)" aria-expanded="false"><img
+								src="http://localhost:8080/images/users/1.jpg" alt="user-img"
+								class="img-circle"><span class="hide-menu">Admin</span></a>
+							<ul aria-expanded="false" class="collapse">
+								<li><a href="javascript:void(0)"><i class="ti-user"></i>
+										My Profile</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="fa fa-power-off"></i> Logout</a></li>
+							</ul></li>
+						<li><a class="waves-effect waves-dark" href="index.html"><i
+								class="icon-speedometer"></i>HOME</a></li>
+						<li><a class="has-arrow waves-effect waves-dark"
+							href="javascript:void(0)" aria-expanded="false"><i
+								class="ti-email"></i><span class="hide-menu">Employee
+									Management</span></a>
+							<ul aria-expanded="false" class="collapse">
+								<li><a th:href="@{'/admin/list-employee'}">Employee
+										List</a></li>
+								<li><a href="#">Create Employee</a></li>
+							</ul></li>
+						<li><a class="has-arrow waves-effect waves-dark"
+							href="javascript:void(0)" aria-expanded="false"><i
+								class="ti-email"></i><span class="hide-menu">Customer
+									Management</span></a>
+
+							<ul aria-expanded="false" class="collapse">
+								<li><a href="app-email.html">Vaccine Type List</a></li>
+								<li><a href="app-email-detail.html">Create Vaccine Type</a></li>
+							</ul></li>
+						<li><a class="has-arrow waves-effect waves-dark"
+							href="javascript:void(0)" aria-expanded="false"><i
+								class="ti-email"></i><span class="hide-menu">Vaccine
+									Management</span></a>
+
+							<ul aria-expanded="false" class="collapse">
+								<li><a th:href="@{/admin/list-vaccine-type}">Vaccine
+										Type List</a></li>
+								<li><a th:href="@{/admin/vaccine-type/add}">Create
+										Vaccine Type</a></li>
+							</ul></li>
+						<li><a class="has-arrow waves-effect waves-dark"
+							href="javascript:void(0)" aria-expanded="false"><i
+								class="ti-email"></i><span class="hide-menu">Vaccine
+									Management</span></a>
+
+							<ul aria-expanded="false" class="collapse">
+								<li><a href="app-email.html">Vaccine List</a></li>
+								<li><a href="app-email-detail.html">Create Vaccine</a></li>
+								<li><a href="app-email-detail.html">Import Vaccine</a></li>
+							</ul></li>
+						<li><a class="has-arrow waves-effect waves-dark"
+							href="javascript:void(0)" aria-expanded="false"><i
+								class="ti-email"></i><span class="hide-menu">Injection
+									Schedule</span></a>
+
+							<ul aria-expanded="false" class="collapse">
+								<li><a href="app-email.html">Injection Schedule List</a></li>
+								<li><a href="app-email-detail.html">Create Injection
+										Schedule</a></li>
+							</ul></li>
+						<li><a class="has-arrow waves-effect waves-dark"
+							href="javascript:void(0)" aria-expanded="false"><i
+								class="ti-email"></i><span class="hide-menu">Injection
+									Result</span></a>
+
+							<ul aria-expanded="false" class="collapse">
+								<li><a href="app-email.html">Injection Result List</a></li>
+								<li><a href="app-email-detail.html">Create Injection
+										Result</a></li>
+							</ul></li>
+						<li><a class="has-arrow waves-effect waves-dark"
+							href="javascript:void(0)" aria-expanded="false"><i
+								class="ti-email"></i><span class="hide-menu">News</span></a>
+
+							<ul aria-expanded="false" class="collapse">
+								<li><a href="app-email.html">News List</a></li>
+								<li><a href="app-email-detail.html">Create News</a></li>
+							</ul></li>
+						<li><a class="has-arrow waves-effect waves-dark"
+							href="javascript:void(0)" aria-expanded="false"><i
+								class="ti-email"></i><span class="hide-menu">Report</span></a>
+
+							<ul aria-expanded="false" class="collapse">
+								<li><a href="app-email.html">Report List</a></li>
+								<li><a href="app-email-detail.html">Create Report</a></li>
+							</ul></li>
+
+					</ul>
+				</nav>
+				<!-- End Sidebar navigation -->
+			</div>
+			<!-- End Sidebar scroll-->
+		</aside>
+		<!-- ============================================================== -->
+		<!-- End Left Sidebar - style you can find in sidebar.scss  -->
+		<!-- ============================================================== -->
+		<!-- ============================================================== -->
+		<!-- Page wrapper  -->
+		<!-- ============================================================== -->
+
+		<div class="page-wrapper">
+			<!-- ====== -->
+			<!-- Container fluid  -->
+			<!-- ====== -->
+			<div class="container-fluid">
+				<!-- ====== -->
+				<!-- Bread crumb and right sidebar toggle -->
+				<!-- ====== -->
+				<div class="row page-titles">
+					<div class="col-md-5 align-self-center">
+						<h4 class="text-themecolor">UPDATE EMPLOYEE</h4>
+					</div>
+					<div class="col-md-7 align-self-center text-right">
+						<div class="d-flex justify-content-end align-items-center">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+								<li class="breadcrumb-item active">Create Employee</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+				<!-- ====== -->
+				<!-- End Bread crumb and right sidebar toggle -->
+				<!-- ====== -->
+				<!-- ====== -->
+				<!-- Info box -->
+				<!-- ====== -->
+				<!-- Row -->
+				<div class="row">
+					<div class="col-12">
+						<div class="card">
+							<div class="card-body">
+								<form th:action="@{/admin/employee/saveUpdate}"
+									th:object="${employee}" method="POST"
+									enctype="multipart/form-data" class="needs-validation"
+									novalidate="">
+									<div class="form-row">
+										<div class="col-12 d-flex justify-content-center">
+											<h5 class="text-danger m-1 p-2" th:text="${messagecheck}"></h5>
+										</div>
+										<div class="col-md-4 mb-3">
+											<label for="validationCustom01">Employee Id</label> <input
+												name="employeeId" th:value="${employee.employeeId}"
+												type="text" class="form-control" id="validationCustom01"
+												placeholder="Employee ID" required="" readonly="readonly">
+											<div class="valid-feedback">Please choose a username.</div>
+										</div>
+										<div class="col-md-4 mb-3">
+											<label for="validationCustom02">Employee Name</label> <input
+												name="fullName" th:value="${employee.fullName}" type="text"
+												class="form-control" id="validationCustom02"
+												placeholder="Full name" required="">
+											<div class="valid-feedback">Please choose a username.</div>
+										</div>
+										<div class="col-md-4 mb-3">
+											<label for="validationCustomUsername">Gender</label>
+											<div class="form-check" style="display: flex;">
+												<div class="custom-control custom-radio">
+													<input value="1" th:checked="${employee.gender}"
+														type="radio" id="customRadio1" name="gender"
+														class="custom-control-input"> <label
+														class="custom-control-label" for="customRadio1">Male</label>
+												</div>
+												<div class="custom-control custom-radio ml-5">
+													<input value="2" th:checked="${employee.gender}"
+														type="radio" id="customRadio2" name="gender"
+														class="custom-control-input"> <label
+														class="custom-control-label" for="customRadio2">Female</label>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="col-md-4 mb-3">
+											<label for="validationCustom03">Date of Birth</label> <input
+												name="birthDate" th:field="*{birthDate}" type="date"
+												class="form-control" placeholder="dd/mm/yyyy" required>
+											<div class="alert alert-warning"
+												th:if="${#fields.hasErrors('birthDate')}"
+												th:errors="*{birthDate}"></div>
+											<div class="" th:if="${years<18 || years>150}"
+												th:text="${message}"></div>
+										</div>
+										<div class="col-md-4 mb-3">
+											<label for="validationCustom04">Phone</label> <input
+												name="phone" th:field="*{phone}" type="text"
+												class="form-control" id="validationCustom04"
+												placeholder="Phone" required="">
+											<div class="alert alert-warning"
+												th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+										</div>
+										<div class="col-md-4 mb-3">
+											<label for="validationCustom05">Address</label> <input
+												name="address" th:value="${employee.address}" type="text"
+												class="form-control" id="validationCustom05"
+												placeholder="Address" required="">
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="col-md-4 mb-3">
+											<label for="validationCustom03">Email</label> <input
+												name="email" th:field="*{email}" type="text"
+												class="form-control" id="validationCustom03"
+												placeholder="Email" required="">
+											<div class="alert alert-warning"
+												th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+										</div>
+										<div class="col-md-4 mb-3">
+											<label for="validationCustom04">WorkPlace</label> <input
+												name="workingPlace" th:value="${employee.workingPlace}"
+												type="text" class="form-control" id="validationCustom04"
+												placeholder="WorkPlace" required="">
+										</div>
+										<div class="col-md-4 mb-3">
+											<label for="validationCustom05">Posotion</label> <input
+												name="position" th:value="${employee.position}" type="text"
+												class="form-control" id="validationCustom05"
+												placeholder="Posotion" required="">
+										</div>
+									</div>
+									<div>
+										<input name="status" hidden="" th:value="${employee.status}">
+										<input name="idOfRole" hidden=""
+											th:value="${employee.idOfRole}"> <input
+											name="username" hidden="" th:value="${employee.username}">
+										<input name="password" hidden=""
+											th:value="${employee.password}">
+									</div>
+									<div class="form-row">
+										<div class="col-lg-4 col-md-4">
+											<div class="card">
+												<h4 class="card-title">Image</h4>
+												<input name="file" type="file" id="input-file-max-fs"
+													accept="image/*" class="dropify" data-max-file-size="2M" />
+											</div>
+											<div class="col-lg-4 col-md-4">
+												<div class="card">
+													<h4 class="card-title">Current</h4>
+													<img style="width: 200px; height: 200px;"
+														th:src="@{/admin/image/} + ${imageName}"> <input
+														type="hidden" th:field="*{image}">
+												</div>
+											</div>
+										</div>
+									</div>
+									<button class="btn btn-success" type="submit">Update</button>
+									<button class="btn btn-primary" type="reset">Reset</button>
+									<button class="btn btn-warning" type="cancel">Cancel</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<footer class="footer"> © 2020 Eliteadmin by themedesigner.in
+		</footer>
+		<!-- ====== -->
+		<!-- End footer -->
+		<!-- ====== -->
+	</div>
+	<!-- ====== -->
+	<!-- End Wrapper -->
+	<!-- ====== -->
+	<!-- ====== -->
+	<!-- All Jquery -->
+	<!-- ====== -->
+	<script src="http://localhost:8080/js/jquery-3.2.1.min.js"></script>
+	<!-- Bootstrap tether Core JavaScript -->
+	<script src="http://localhost:8080/js/popper.min.js"></script>
+	<script src="http://localhost:8080/js/bootstrap.min.js"></script>
+	<!-- slimscrollbar scrollbar JavaScript -->
+	<script src="http://localhost:8080/js/perfect-scrollbar.jquery.min.js"></script>
+	<!--Wave Effects -->
+	<script src="http://localhost:8080/js/waves.js"></script>
+	<!--Menu sidebar -->
+	<script src="http://localhost:8080/js/sidebarmenu.js"></script>
+	<!--stickey kit -->
+	<script src="http://localhost:8080/js/sticky-kit.min.js"></script>
+	<script src="http://localhost:8080/js/jquery.sparkline.min.js"></script>
+	<!--Custom JavaScript -->
+	<script src="http://localhost:8080/js/custom.min.js"></script>
+	<script src="http://localhost:8080/js/dropify.min.js"></script>
+	<script>
+
+        $(document).ready(function() {
+            // Basic
+            $('.dropify').dropify();
+
+            // Translated
+            $('.dropify-fr').dropify({
+                messages: {
+                    default: 'Glissez-déposez un fichier ici ou cliquez',
+                    replace: 'Glissez-déposez un fichier ou cliquez pour remplacer',
+                    remove: 'Supprimer',
+                    error: 'Désolé, le fichier trop volumineux'
+                }
+            });
+
+            // Used events
+            var drEvent = $('#input-file-events').dropify();
+
+            drEvent.on('dropify.beforeClear', function(event, element) {
+                return confirm("Do you really want to delete \"" + element.file.name + "\" ?");
+            });
+
+            drEvent.on('dropify.afterClear', function(event, element) {
+                alert('File deleted');
+            });
+
+            drEvent.on('dropify.errors', function(event, element) {
+                console.log('Has Errors');
+            });
+
+            var drDestroy = $('#input-file-to-destroy').dropify();
+            drDestroy = drDestroy.data('dropify')
+            $('#toggleDropify').on('click', function(e) {
+                e.preventDefault();
+                if (drDestroy.isDropified()) {
+                    drDestroy.destroy();
+                } else {
+                    drDestroy.init();
+                }
+            })
+        });
+    </script>
+</body>
+
+</html>

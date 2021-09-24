@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	layout:decorator="layout">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- Tell the browser to be responsive to screen width -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" type="image/png" sizes="16x16"
+	href="../assets/images/favicon.png">
+<title>List Employee</title>
+<link rel="stylesheet" type="text/css"
+	href="http://localhost:8080/css/dataTables.bootstrap4.css">
+<link rel="stylesheet" type="text/css"
+	href="http://localhost:8080/css/responsive.dataTables.min.css">
+<!-- Custom CSS -->
+<link href="http://localhost:8080/css/style.min.css" rel="stylesheet">
+</head>
+
+<body class="skin-megna fixed-layout">
+	<div id="main-wrapper">
+		<th:block th:insert="template :: header">
+		</th:block>
+		<!-- ====== -->
+		<!-- End Topbar header -->
+		<!-- ====== -->
+		<!-- ====== -->
+		<!-- Left Sidebar - style you can find in sidebar.scss  -->
+		<!-- ====== -->
+		<th:block th:insert="template :: menuLeft">
+		</th:block>
+		<div class="page-wrapper">
+			<div class="container-fluid">
+				<div class="row page-titles">
+					<div class="col-md-5 align-self-center">
+						<h4 class="text-themecolor">List Employee</h4>
+					</div>
+					<div class="col-md-7 align-self-center text-right">
+						<div class="d-flex justify-content-end align-items-center">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+								<li class="breadcrumb-item active">List Employee</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+
+					<div class="col-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="row p-l-20">
+									<div class="col-2" style="padding-left: 15px">
+										<select class="form-control" id="select-column">
+											<option selected value="1">ID</option>
+											<option value="2">Name</option>
+										</select>
+									</div>
+									<div class="col-4">
+										<input class="form-control" type="text" id="search-by-column"
+											placeholder="Search By Column">
+									</div>
+									<div class="col-6">
+										<div th:if="${error}" class="alert alert-warning">
+											<span class="error" th:text="${error}"></span>
+										</div>
+										<div th:if="${success}" class="alert alert-success">
+											<span class="success" th:text="${success}"></span>
+										</div>
+									</div>
+								</div>
+								<div class="table-responsive m-t-20">
+									<form th:action="@{/admin/delete}" method="POST"
+										th:object="${employee}">
+										<table id="myTable" data-height="5"
+											;
+											class="table display table-bordered table-striped no-wrap">
+											<thead>
+												<tr>
+													<th><input type="checkbox" onchange="checkAll(this)"
+														name="chk[]" /></th>
+													<th>Employee ID</th>
+													<th>Employee Name</th>
+													<th>Date of Birth</th>
+													<th>Gender</th>
+													<th>Phone</th>
+													<th>Address</th>
+													<th>Action</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="employee :${employees}">
+													<td><input type="checkbox" th:name="idChecked"
+														th:value="${employee.employeeId}" /></td>
+													<td th:text="${employee.employeeId}"></td>
+													<td th:text="${employee.fullName}"></td>
+													<td th:text="${employee.birthDate}"></td>
+													<td th:text="${employee.gender}"></td>
+													<td th:text="${employee.phone}"></td>
+													<td th:text="${employee.address}"></td>
+													<td><a
+														th:href="@{'/admin/update-employee/'+${employee.employeeId}}">Edit</a>&nbsp;
+														&nbsp; <a
+														th:href="@{'/admin/delete/'+${employee.employeeId}}"
+														onclick="return confirm('Are you sure?')">Delete</a></td>
+												</tr>
+											</tbody>
+										</table>
+										<div class="button-cfg">
+											<button type="button" class="btn btn-info ">
+												<a th:href="@{/admin/create-employee}" style="color: white">New
+													Employee</a>
+											</button>
+											<button onclick="return confirm('Are you sure?')"
+												type="submit" name='delete' value="delete"
+												class='btn btn-warning' th:href="@{/admin/delete}"
+												th:title="#{delete.selected}">Delete Employees</button>
+										</div>
+									</form>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<th:block th:insert="template :: footer">
+		</th:block>
+		<!-- ============================================================== -->
+		<!-- End footer -->
+		<!-- ============================================================== -->
+	</div>
+	<!-- ============================================================== -->
+	<!-- End Wrapper -->
+	<!-- ============================================================== -->
+	<!-- ============================================================== -->
+	<!-- All Jquery -->
+	<!-- ============================================================== -->
+	<script src="http://localhost:8080/js/jquery-3.2.1.min.js"></script>
+	<!-- Bootstrap tether Core JavaScript -->
+	<script src="http://localhost:8080/js/popper.min.js"></script>
+	<script src="http://localhost:8080/js/bootstrap.min.js"></script>
+	<!-- slimscrollbar scrollbar JavaScript -->
+	<script src="http://localhost:8080/js/perfect-scrollbar.jquery.min.js"></script>
+	<!--Wave Effects -->
+	<script src="http://localhost:8080/js/waves.js"></script>
+	<!--Menu sidebar -->
+	<script src="http://localhost:8080/js/sidebarmenu.js"></script>
+	<!--stickey kit -->
+	<script src="http://localhost:8080/js/sticky-kit.min.js"></script>
+	<script src="http://localhost:8080/js/jquery.sparkline.min.js"></script>
+	<!--Custom JavaScript -->
+	<script src="http://localhost:8080/js/custom.min.js"></script>
+	<!-- This is data table -->
+	<script src="http://localhost:8080/js/jquery.dataTables.min.js"></script>
+	<script src="http://localhost:8080/js/dataTables.responsive.min.js"></script>
+	<!-- start - This is for export functionality only -->
+	<script src="http://localhost:8080/js/dataTables.buttons.min.js"></script>
+	<script src="http://localhost:8080/js/buttons.flash.min.js"></script>
+	<script src="http://localhost:8080/js/jszip.min.js"></script>
+	<script src="http://localhost:8080/js/pdfmake.min.js"></script>
+	<script src="http://localhost:8080/js/vfs_fonts.js"></script>
+	<script src="http://localhost:8080/js/buttons.print.min.js"></script>
+	<!-- end - This is for export functionality only -->
+	<script>
+		function checkAll(ele) {
+			var checkboxes = document.getElementsByTagName('input');
+			if (ele.checked) {
+				for (var i = 0; i < checkboxes.length; i++) {
+					if (checkboxes[i].type == 'checkbox') {
+						checkboxes[i].checked = true;
+					}
+				}
+			} else {
+				for (var i = 0; i < checkboxes.length; i++) {
+					console.log(i)
+					if (checkboxes[i].type == 'checkbox') {
+						checkboxes[i].checked = false;
+					}
+				}
+			}
+		}
+	</script>
+</body>
+
+</html>

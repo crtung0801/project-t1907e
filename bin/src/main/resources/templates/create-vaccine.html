@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link href="http://localhost:8080/css/style.min.css" rel="stylesheet">
+<link rel="stylesheet" href="http://localhost:8080/css/dataTables.bootstrap4.css">
+<link rel="stylesheet" href="http://localhost:8080/css/responsive.dataTables.min.css">
+</head>
+
+<body class="skin-megna fixed-layout">
+	<div id="main-wrapper">
+		<header class="topbar" th:replace="fragments :: header"></header>
+		<aside class="left-sidebar" th:replace="fragments :: menu"></aside>
+		<div class="page-wrapper">
+			<div class="container-fluid">
+				<div class="row page-titles">
+					<div class="col-md-5 align-self-center">
+						<h4 class="text-themecolor">CREATE VACCINE</h4>
+					</div>
+					<div class="col-md-7 align-self-center text-right">
+						<div class="d-flex justify-content-end align-items-center">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+								<li class="breadcrumb-item active">Create Vaccine</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<div class="card">
+							<div class="card-body">
+								<form class="needs-validation" name="myForm"
+									th:action="@{/admin/vaccine/save}" method="POST"
+									th:object="${vaccine}">
+									<div class="form-row">
+										<div class="col-md-8 mb-3">
+											<label>Vaccine Id</label><span>(*)</span> <input type="text"
+												th:field="*{vaccineId}" class="form-control"
+												placeholder="Vaccine Id" required
+												onkeypress="return validateNumber(event)"> <span
+												th:if="${#fields.hasErrors('vaccineId')}"
+												th:errors="*{vaccineId}"></span>
+
+										</div>
+
+										<div class="col-md-4 mb-3">
+											<label>Active</label><span>(*)</span>
+											<div class="controls ">
+												<div class="custom-control custom-checkbox m-l-20">
+
+													<input type="checkbox" name="active" checked>
+												</div>
+												<span th:if="${#fields.hasErrors('active')}"
+													th:errors="*{active}"></span>
+											</div>
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="col-md-4 mb-3">
+											<label>Vaccine Name</label><span>(*)</span> <input
+												th:field="*{vaccineName}" type="text" class="form-control "
+												placeholder="Vaccine name" required="true">
+										</div>
+										<div class="col-md-4 mb-3">
+											<label for="validationCustom04">Vaccine Type</label> <span>(*)</span>
+											<select class="form-control custom-select "
+												th:field="*{vaccineType}" id="selectVaccine">
+												<option value="0" selected>---Select Vaccine
+													Type---</option>
+												<th:block th:each="type : ${vaccineTypes}">
+													<option th:text="${type.vaccineTypeName}"
+														th:value=${type.vaccineTypeId}></option>
+												</th:block>
+											</select>
+										</div>
+										<div class="col-md-4 mb-3">
+											<label for="validationCustom05">Number of inject</label>
+											 <input
+												type="text" class="form-control "
+												placeholder="Number of inject" name="numberOfInjection"
+												th:field="*{numberOfInjection}"
+												onkeypress="return validateNumber(event)">
+												 <span
+												th:if="${#fields.hasErrors('numberOfInjection')}"
+												th:errors="*{numberOfInjection}"></span>
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="col-md-4 mb-3">
+											<label>Usage:</label>
+											<textarea rows="5" class="form-control " name="usage"
+												placeholder="Ussage" aria-invalid="false"
+												th:field="*{usage}"></textarea>
+										</div>
+										<div class="col-md-4 mb-3">
+											<label>Indication</label>
+											<textarea rows="5" class="form-control" name="indication"
+												placeholder="Indication" aria-invalid="false"
+												th:field="*{indication}"></textarea>
+										</div>
+										<div class="col-md-4 mb-3">
+											<label>Contraindication</label>
+											<textarea rows="5" class="form-control "
+												name="contraindication" placeholder="Contraindication"
+												aria-invalid="false" th:field="*{contraindication}"></textarea>
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="col-lg-4 col-md-3">
+											<label>Time of begining next Injection</label> <input
+												type="date" name="timeBeginNextInjection"
+												class="form-control " id="startDate"
+												th:field="*{timeBeginNextInjection}"> <span
+												th:if="${#fields.hasErrors('timeBeginNextInjection')}"
+												th:errors="*{timeBeginNextInjection}"></span>
+
+										</div>
+										<div class="col-lg-4 col-md-3">
+											<label>Time of ending next Injection</label> <input
+												type="date" class="form-control " id="endDate"
+												name="timeEndNextInjection"
+												th:field="*{timeEndNextInjection}"> <span
+												th:if="${#fields.hasErrors('timeEndNextInjection')}"
+												th:errors="*{timeEndNextInjection}"></span>
+										</div>
+										<div class="col-lg-4 col-md-3">
+											<label for="validationCustom05">Origin</label> <input
+												type="text" class="form-control " placeholder="Origin"
+												name="origin" th:field="*{origin}">
+										</div>
+									</div>
+									<div class="bot">
+										<button class="btn btn-success" type="submit"
+											onclick="return  numberValidation()">Save</button>
+										<button class="btn btn-info" type="reset">Reset</button>
+										<button class="btn btn-warning">
+											<a th:href="@{/admin/vaccine/list}" style="color: white">Cancel</a>
+										</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<footer class="footer" th:replace="fragments :: footer"></footer>
+<script src="js/jquery-3.2.1.min.js "></script>
+<script src="js/popper.min.js "></script>
+<script src="js/bootstrap.min.js "></script>
+<script src="js/perfect-scrollbar.jquery.min.js "></script>
+<script src="js/waves.js "></script>
+<script src="js/sidebarmenu.js "></script>
+<script src="js/custom.min.js "></script>
+<script src="js/jquery.sparkline.min.js "></script>
+<script src="js/jquery.dataTables.min.js "></script>
+<script src="js/dataTables.responsive.min.js "></script>
+<script src="js/dataTables.buttons.min.js "></script>
+
+
+<script>
+	function validateNumber(e) {
+		const pattern = /^[0-9]$/;
+
+		return pattern.test(e.key)
+	}
+
+	$("#startDate").datetimepicker({
+		timepicker : false,
+		datepicker : true,
+		format : 'Y-m-d',
+		onShow : function(ct) {
+			this.setOptions({
+				maxDate : $('#endDate').val() ? $('#endDate').val() : false
+			})
+		}
+	})
+
+	$("#endDate").datetimepicker({
+		timepicker : false,
+		datepicker : true,
+		format : 'Y-m-d',
+		onShow : function(ct) {
+			this.setOptions({
+				minDate : $('#startDate').val() ? $('#startDate').val() : false
+			})
+		}
+	})
+</script>
+
+</html>

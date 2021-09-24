@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link href="http://localhost:8080/css/style.min.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="http://localhost:8080/css/dataTables.bootstrap4.css">
+<link rel="stylesheet"
+	href="http://localhost:8080/css/responsive.dataTables.min.css">
+
+</head>
+
+<body class="skin-megna fixed-layout">
+	<div id="main-wrapper">
+		<header class="topbar" th:replace="fragments :: header"></header>
+		<aside class="left-sidebar" th:replace="fragments :: menu"></aside>
+		<div class="page-wrapper">
+			<div class="container-fluid">
+				<div class="row page-titles">
+					<div class="col-md-5 align-self-center">
+						<h4 class="text-themecolor">List schedule</h4>
+					</div>
+					<div class="col-md-7 align-self-center text-right">
+						<div class="d-flex justify-content-end align-items-center">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+								<li class="breadcrumb-item next">List schedule</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="table-responsive m-t-40">
+									<div id="config-table_wrapper"
+										class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+										<div class="row">
+											<div class="col-sm-12 col-md-6">
+												<div class="dataTables_length" id="config-table_length">
+													<label>Show <select name="config-table_length"
+														aria-controls="config-table"
+														class="form-control form-control-sm">
+															<option value="10">10</option>
+															<option value="25">25</option>
+															<option value="50">50</option>
+															<option value="100">100</option>
+													</select> entries
+													</label>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-6">
+												<div id="config-table_filter" class="dataTables_filter">
+													<form th:action="@{/admin/schedule/page/1}">
+														<label>Search: <input type="text" name=keyword
+															class="form-control form-control-sm"
+															th:value="${keyword}" aria-controls="config-table">
+															&nbsp
+														</label>
+													</form>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-12">
+												<table id="config-table"
+													class="table display table-bordered table-striped no-wrap dataTable no-footer dtr-inline"
+													role="grid" aria-describedby="config-table_info">
+													<thead>
+														<tr role="row">
+															<th>Vaccine</th>
+															<th>Time</th>
+															<th>Place</th>
+															<th>Status</th>
+															<th>Note</th>
+															<th>Action</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr th:each="schedule : ${schedules}">
+															<td><a
+																th:href="@{/admin/schedule/update/{id}(id = ${schedule.id})}">[[${schedule.vaccine.vaccineName}]]</a></td>
+															<td>[[${schedule.startDate}]]</td>
+															<td>[[${schedule.place}]]</td>
+															<td>[[${schedule.status}]]</td>
+															<td>[[${schedule.description}]]</td>
+															<td><a class="text-warning"
+																th:href="@{/admin/schedule/update/{id}(id = ${schedule.id})}"
+																style="color: white">Update</a></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+										<div class="row p-t-20">
+											<div class="col-sm-12 col-md-5">
+												<div class="dataTables_info" id="config-table_info"
+													role="status" aria-live="polite">
+													<div>
+														<div th:if="${totalItems > 10 }">Showing
+															[[${currentPage}*0+1]] to [[${currentPage}*0+10]] of
+															[[${totalItems}]] entries</div>
+														<div th:unless="${totalItems >10}">Showing
+															[[${currentPage}*1+1]] to [[${totalItems}]] of
+															[[${totalItems}]] entries"</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-12 col-md-7">
+												<div class="dataTables_paginate paging_simple_numbers"
+													id="config-table_info">
+													<ul class="pagination">
+														<li
+															th:class="${currentPage > 1  ? 'paginate_button page-item next': 'paginate_button page-item disabled'}">
+															<a th:href="@{/admin/schedule/page/1}"
+															aria-controls="config-table" data-dt-idx="0" tabindex="0"
+															class="page-link">First</a>
+														</li>
+														<li
+															th:class="${currentPage > 1 ? 'paginate_button page-item next' :  'paginate_button page-item disabled' }">
+															<a th:href="@{'/admin/schedule/page/'+${currentPage-1}}"
+															aria-controls="config-table" data-dt-idx="0" tabindex="0"
+															class="page-link">Previous</a>
+														</li>
+														<th:block th:if="${totalPages==0}">
+															<li class="paginate_button page-item disabled"><a
+																th:href="@{'/admin/schedule/page/1'}"
+																aria-controls="config-table" data-dt-idx="0"
+																tabindex="0" class="page-link">0</a></li>
+														</th:block>
+														<th:block th:if="${totalPages<=10 && totalPages>0}">
+															<li th:each="i:${#numbers.sequence(1,totalPages)}"
+																th:class=" ${i != currentPage ? 'paginate_button page-item next'  : 'paginate_button page-item active' }">
+																<a th:href="@{'/admin/schedule/page/'+${i}}"
+																aria-controls="config-table" data-dt-idx="0"
+																tabindex="0" class="page-link">[[${i}]]</a>
+															</li>
+														</th:block>
+														<th:block th:if="${totalPages>10}">
+															<th:block
+																th:if="${currentPage <= 5 || currentPage > totalPages-4}">
+																<li th:each="i:${#numbers.sequence(1,5)}"
+																	th:class=" ${i != currentPage ? 'paginate_button page-item next'  : 'paginate_button page-item active' }">
+																	<a th:href="@{'/admin/schedule/page/'+${i}}"
+																	aria-controls="config-table" data-dt-idx="0"
+																	tabindex="0" class="page-link">[[${i}]]</a>
+																</li>
+
+																<li th:each="i:${#numbers.sequence(6)}"
+																	th:class=" ${i != currentPage ? 'paginate_button page-item next'  : 'paginate_button page-item active' }">
+																	<a th:href="@{'/admin/schedule/page/'+${i}}"
+																	aria-controls="config-table" data-dt-idx="0"
+																	tabindex="0" class="page-link">...</a>
+																</li>
+
+																<li
+																	th:each="i:${#numbers.sequence(totalPages-4,totalPages)}"
+																	th:class=" ${i != currentPage ? 'paginate_button page-item next'  : 'paginate_button page-item active' }">
+																	<a th:href="@{'/admin/schedule/page/'+${i}}"
+																	aria-controls="config-table" data-dt-idx="0"
+																	tabindex="0" class="page-link">[[${i}]]</a>
+																</li>
+
+
+															</th:block>
+															<th:block
+																th:if="${currentPage>5 && currentPage < totalPages-4}">
+																<a th:href="@{'/admin/schedule/page/'+${currentPage-5}}"
+																	aria-controls="config-table" data-dt-idx="0"
+																	tabindex="0" class="page-link">...</a>
+																<li
+																	th:each="i:${#numbers.sequence(currentPage-4,currentPage+4)}"
+																	th:class=" ${i != currentPage ? 'paginate_button page-item next'  : 'paginate_button page-item active' }">
+																	<a th:href="@{'/admin/schedule/page/'+${i}}"
+																	aria-controls="config-table" data-dt-idx="0"
+																	tabindex="0" class="page-link">[[${i}]]</a>
+																</li>
+																<a th:href="@{'/admin/schedule/page/'+${currentPage+5}}"
+																	aria-controls="config-table" data-dt-idx="0"
+																	tabindex="0" class="page-link">...</a>
+
+															</th:block>
+
+														</th:block>
+														<li
+															th:class="${currentPage < totalPages ? 'paginate_button page-item next' :'paginate_button page-item disabled' }">
+															<a th:href="@{'/admin/schedule/page/'+${currentPage+1}}"
+															aria-controls="config-table" data-dt-idx="0" tabindex="0"
+															class="page-link">Next</a>
+														</li>
+														<li
+															th:class="${currentPage > 1 ? 'paginate_button page-item last' :'paginate_button page-item disabled' }">
+															<a th:href="@{'/admin/schedule/page/'+${currentPage-1}}"
+															aria-controls="config-table" data-dt-idx="0" tabindex="0"
+															class="page-link">Last</a>
+														</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+
+										<div class="button-cfg">
+											<button type="button" class="btn btn-success ">
+												<a th:href="@{/admin/schedule/create}" style="color: white">New
+													Injection Schedule</a>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="footer" th:replace="fragments :: footer"></div>
+	</div>
+</body>
+
+<script src="http://localhost:8080/js/jquery-3.2.1.min.js "></script>
+<script src="http://localhost:8080/js/popper.min.js "></script>
+<script src="http://localhost:8080/js/bootstrap.min.js "></script>
+<script src="http://localhost:8080/js/perfect-scrollbar.jquery.min.js "></script>
+<script src="http://localhost:8080/js/waves.js "></script>
+<script src="http://localhost:8080/js/sidebarmenu.js "></script>
+<script src="http://localhost:8080/js/custom.min.js "></script>
+<script src="http://localhost:8080/js/jquery.sparkline.min.js "></script>
+<script src="http://localhost:8080/js/jquery.dataTables.min.js "></script>
+<script src="http://localhost:8080/js/dataTables.responsive.min.js "></script>
+<script src="http://localhost:8080/js/dataTables.buttons.min.js "></script>
+
+<script>
+	function validateNumber(e) {
+		const pattern = /^[0-9]$/;
+
+		return pattern.test(e.key)
+	}
+
+	$("#startDate").datetimepicker({
+		timepicker : false,
+		datepicker : true,
+		format : 'Y-m-d',
+		onShow : function(ct) {
+			this.setOptions({
+				maxDate : $('#endDate').val() ? $('#endDate').val() : false
+			})
+		}
+	})
+
+	$("#endDate").datetimepicker({
+		timepicker : false,
+		datepicker : true,
+		format : 'Y-m-d',
+		onShow : function(ct) {
+			this.setOptions({
+				minDate : $('#startDate').val() ? $('#startDate').val() : false
+			})
+		}
+	})
+</script>
+</body>
+
+</html>

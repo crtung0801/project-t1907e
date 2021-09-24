@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link href="http://localhost:8080/css/style.min.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="http://localhost:8080/css/dataTables.bootstrap4.css">
+<link rel="stylesheet"
+	href="http://localhost:8080/css/responsive.dataTables.min.css">
+
+</head>
+
+<body class="skin-megna fixed-layout">
+	<div id="main-wrapper">
+		<header class="topbar" th:replace="fragments :: header"></header>
+		<aside class="left-sidebar" th:replace="fragments :: menu"></aside>
+		<div class="page-wrapper">
+			<!-- ============================================================== -->
+			<!-- Container fluid  -->
+			<!-- ============================================================== -->
+			<div class="container-fluid">
+				<!-- ============================================================== -->
+				<!-- Bread crumb and right sidebar toggle -->
+				<!-- ============================================================== -->
+				<div class="row page-titles">
+					<div class="col-md-5 align-self-center">
+						<h4 class="text-themecolor">CREATE INJECTION SCHEDULE</h4>
+					</div>
+					<div class="col-md-7 align-self-center text-right">
+						<div class="d-flex justify-content-end align-items-center">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a th:href="@{/admin}">Home</a></li>
+								<li class="breadcrumb-item active">Create injection
+									schedule</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<div class="card">
+							<div class="card-body">
+								<form th:action="@{/admin/schedule/save}" method="POST"
+									th:object="${schedule}" class="needs-validation" novalidate="">
+									<div class="form-row">
+										<input type="hidden" th:field=*{id} class="form-control" />
+
+										<div class="col-md-4 mb-3">
+											<label>Vaccine <span class="text-danger">(*)</span>
+											</label> <select class="form-control"
+												th:field="*{vaccine.vaccineName}">
+												<option th:if="*{vaccine.vaccineName != null}"
+													th:value="*{vaccine.vaccineId}"
+													th:text="*{vaccine.vaccineName}"></option>
+												<option th:if="*{vaccine.vaccineName == null}" value="0">---Select
+													Vaccine Type---</option>
+												<th:block th:each="vaccine : ${vaccines}">
+													<option th:value="${vaccine[0]}" th:text="${vaccine[1]}"></option>
+												</th:block>
+											</select>
+
+										</div>
+
+										<div class="col-md-4 mb-3">
+											<label>Status <span class="text-danger">(*)</span>
+											</label> <select class="form-control" th:field="*{status}">
+												<option th:if="*{status != null}" th:value="*{status}"
+													th:text="*{status}"></option>
+												<option value="Over">Over</option>
+												<option value="Open" selected>Open</option>
+												<option value="Not_yet">Not yet</option>
+											</select>
+										</div>
+									</div>
+
+
+									<div class="form-row">
+										<div class="col-md-4 mb-3">
+											<label for="validationCustom03">From</label> <span
+												class="text-danger">(*):</span><input name="startDate"
+												th:field="*{startDate}" type="date" class="form-control"
+												placeholder="dd/mm/yyyy" required>
+											<div class="alert alert-warning"
+												th:if="${#fields.hasErrors('startDate')}"
+												th:errors="*{from}"></div>
+											<div class="col-12 d-flex justify-content-center">
+												<h5 class="text-danger m-1 p-2" th:text="${message}"></h5>
+											</div>
+										</div>
+										<div class="col-md-4 mb-3">
+											<label for="validationCustom03">To</label> <span
+												class="text-danger">(*):</span><input name="endDate"
+												th:field="*{endDate}" type="date" class="form-control"
+												placeholder="dd/mm/yyyy" required>
+											<div class="alert alert-warning"
+												th:if="${#fields.hasErrors('endDate')}"
+												th:errors="*{endDate}"></div>
+
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="col-md-4">
+											<label for="validationCustom03">Place<span
+												class="text-danger">(*):</span></label>
+											<textarea class="form-control"
+												placeholder="Description for vaccine type"
+												th:field="*{place}" rows="5" required></textarea>
+										</div>
+
+										<div class="col-md-8">
+											<label for="validationCustom03">Note:</label>
+											<textarea class="form-control"
+												placeholder="Description for injection schedule"
+												th:field="*{description}" rows="5"></textarea>
+										</div>
+									</div>
+									<button class="btn btn-success" type="submit">Save</button>
+									<button class="btn btn-primary" type="reset">Reset</button>
+									<a class="btn btn-warning" th:href="@{'/admin/schedule/list'}">Cancel</a>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="footer" th:replace="fragments :: footer"></div>
+	</div>
+</body>
+
+<script src="http://localhost:8080/js/jquery-3.2.1.min.js "></script>
+<script src="http://localhost:8080/js/popper.min.js "></script>
+<script src="http://localhost:8080/js/bootstrap.min.js "></script>
+<script src="http://localhost:8080/js/perfect-scrollbar.jquery.min.js "></script>
+<script src="http://localhost:8080/js/waves.js "></script>
+<script src="http://localhost:8080/js/sidebarmenu.js "></script>
+<script src="http://localhost:8080/js/custom.min.js "></script>
+<script src="http://localhost:8080/js/jquery.sparkline.min.js "></script>
+<script src="http://localhost:8080/js/jquery.dataTables.min.js "></script>
+<script src="http://localhost:8080/js/dataTables.responsive.min.js "></script>
+<script src="http://localhost:8080/js/dataTables.buttons.min.js "></script>
+
+<script>
+	function validateNumber(e) {
+		const pattern = /^[0-9]$/;
+
+		return pattern.test(e.key)
+	}
+
+	$("#startDate").datetimepicker({
+		timepicker : false,
+		datepicker : true,
+		format : 'Y-m-d',
+		onShow : function(ct) {
+			this.setOptions({
+				maxDate : $('#endDate').val() ? $('#endDate').val() : false
+			})
+		}
+	})
+
+	$("#endDate").datetimepicker({
+		timepicker : false,
+		datepicker : true,
+		format : 'Y-m-d',
+		onShow : function(ct) {
+			this.setOptions({
+				minDate : $('#startDate').val() ? $('#startDate').val() : false
+			})
+		}
+	})
+</script>
+</body>
+
+</html>
